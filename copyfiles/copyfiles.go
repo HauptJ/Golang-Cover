@@ -4,13 +4,12 @@ Author: Joshua Haupt
 Last Modified: 07-13-2018
 */
 
-
 package copyfiles
 
 import (
+	"fmt"
+	"io"
 	"os"
-  "fmt"
-  "io"
 )
 
 /*
@@ -53,7 +52,6 @@ func Copy_file(src, dst string) (err error) {
 	err = copy_file_contents(src, dst)
 	return
 }
-
 
 /*
 SOURCE: https://stackoverflow.com/questions/21060945/simple-way-to-copy-a-file-in-golang

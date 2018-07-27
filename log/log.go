@@ -4,23 +4,20 @@ Author: Joshua Haupt
 Last Modified: 07-13-2018
 */
 
-
 package log
 
 import (
-	"os"
-	"strings"
-  "strconv"
 	"../app"
 	"../date"
+	"os"
+	"strconv"
+	"strings"
 )
-
 
 /*
  Constant Declarations
 */
 const LOG_FILE = "app_log.csv"
-
 
 /*
 DESC: Writes to CSV log file

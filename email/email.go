@@ -4,14 +4,12 @@ Author: Joshua Haupt
 Last Modified: 07-13-2018
 */
 
-
 package email
 
 import (
-	"gopkg.in/gomail.v2"
 	"../app"
+	"gopkg.in/gomail.v2"
 )
-
 
 /*
  Constant Declarations
@@ -20,7 +18,6 @@ const EMAIL = "josh@hauptj.com"
 const EMAIL_SMTP = "smtp.gmail.com"
 const EMAIL_COVER_TEMPL = "email_cover_template.html"
 const EMAIL_TEMPL = "email_template.html"
-
 
 /*
 DESC: sends email via SMTP

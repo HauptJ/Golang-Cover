@@ -4,19 +4,17 @@ Author: Joshua Haupt
 Last Modified: 07-13-2018
 */
 
-
 package app
 
 import (
-  "io/ioutil"
-	"strings"
+	"../cmd"
+	"../copyfiles"
+	"../date"
+	"fmt"
+	"io/ioutil"
 	"strconv"
-  "fmt"
-  "../date"
-  "../copyfiles"
-  "../cmd"
+	"strings"
 )
-
 
 /*
  Constant Declarations
@@ -32,41 +30,39 @@ const ALL_FILENAME_BEGIN = "Joshua_Haupt_Cover_Resume_CV_"
 const RESUME_FILENAME_BEGIN = "Joshua_Haupt_Resume_CV_"
 const COVER_FILENAME_BEGIN = "Joshua_Haupt_Cover_"
 
-
 type App struct {
-	Cover string
-	EmailAddr string
-	Subject string
-	EmailPass string
-	Heading string
-	Company string
-	Contact string
-	Position string
-	Source string
-	Note string
-	Note_tex string
-	Note_email string
-	Note_text string
-	Local bool
-	ReloLine string
+	Cover          string
+	EmailAddr      string
+	Subject        string
+	EmailPass      string
+	Heading        string
+	Company        string
+	Contact        string
+	Position       string
+	Source         string
+	Note           string
+	Note_tex       string
+	Note_email     string
+	Note_text      string
+	Local          bool
+	ReloLine       string
 	ReloLine_email string
-	Skill1 string
-	Skill1_tex string
-	Skill1_email string
-	Skill1_text string
-	Skill2 string
-	Skill2_tex string
-	Skill2_email string
-	Skill2_text string
-	Url string
-	Test bool
-	Ref bool
-	KvMap_tex map[string]string
-	KvMap_email map[string]string
-	KvMap_text map[string]string
-	Attachments []string
+	Skill1         string
+	Skill1_tex     string
+	Skill1_email   string
+	Skill1_text    string
+	Skill2         string
+	Skill2_tex     string
+	Skill2_email   string
+	Skill2_text    string
+	Url            string
+	Test           bool
+	Ref            bool
+	KvMap_tex      map[string]string
+	KvMap_email    map[string]string
+	KvMap_text     map[string]string
+	Attachments    []string
 }
-
 
 /*
  Constant Declarations
@@ -75,7 +71,6 @@ const DEFAULT_CONTACT = "To whom it may concern"
 const CONTACT_ENDING = " or to whom it may concern"
 const LOCAL = "I am currently located in the St. Louis area, and I am also receptive to relocation."
 const DISTANT = "I am currently located in the St. Louis area, however, I am receptive to relocation."
-
 
 /*
 DESC: parses flag string values to generate App object values
@@ -121,7 +116,6 @@ func PharseFlags(localFlag, testFlag, refFlag string, appl *App) error {
 		appl.Skill2_text = "- " + appl.Skill2
 	}
 
-
 	appl.Local, err = parseBool(localFlag, true)
 	if err != nil {
 		panic(err)
@@ -135,7 +129,6 @@ func PharseFlags(localFlag, testFlag, refFlag string, appl *App) error {
 		panic("Local undefined")
 	}
 	appl.ReloLine_email = "<div><p style=\"text-align:left;\">" + appl.ReloLine + "</p></div>"
-
 
 	if appl.Cover == "incl" || appl.Cover == "sep" {
 		appl.KvMap_tex = map[string]string{"[COMPANY_NAME]": strings.Replace(appl.Company, "&", "\\&", -1), "[COMPANY_CONTACT]": strings.Replace(appl.Contact, "&", "\\&", -1),
@@ -152,7 +145,6 @@ func PharseFlags(localFlag, testFlag, refFlag string, appl *App) error {
 		appl.KvMap_email = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
 			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_email, "[ADDITIONAL_SKILL_2]": appl.Skill2_email,
 			"[ADDITIONAL_NOTE]": appl.Note_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email}
-
 
 		if appl.Subject == "" && appl.Position != "" {
 			appl.Subject = "Joshua Haupt appllication for " + appl.Position + " position at " + appl.Company // default subject
@@ -173,7 +165,6 @@ func PharseFlags(localFlag, testFlag, refFlag string, appl *App) error {
 	return nil
 }
 
-
 /*
 DESC: parses a string for a bool value and if a blank string is provided, returns specified default
 IN: the string to pharse and a default bool value
@@ -192,7 +183,6 @@ func parseBool(input string, deflt bool) (output bool, err error) {
 	}
 	return output, nil
 }
-
 
 /*
 DESC: Generates Cover, Resume, and CV PDFs
@@ -259,14 +249,13 @@ func Build_pdf(appl *App) error {
 
 	}
 
-  err = appl.rename_files()
-  if err != nil {
-    panic(err)
-  }
+	err = appl.rename_files()
+	if err != nil {
+		panic(err)
+	}
 
 	return nil
 }
-
 
 /*
 DESC: Renames PDF cover letters and resumes
@@ -291,12 +280,12 @@ func (appl App) rename_files() error {
 				panic(err)
 			}
 		} else {
-				err = copyfiles.Copy_file("main_all_ref.pdf", newName)
-				if err != nil {
-					panic(err)
-				}
+			err = copyfiles.Copy_file("main_all_ref.pdf", newName)
+			if err != nil {
+				panic(err)
+			}
 		}
-    appl.text_cover()
+		appl.text_cover()
 		appl.Attachments = append(appl.Attachments, newName)
 
 	} else if appl.Cover == "sep" {
@@ -310,10 +299,10 @@ func (appl App) rename_files() error {
 				panic(err)
 			}
 		} else {
-				err = copyfiles.Copy_file("main_resume_ref.pdf", newName_resume)
-				if err != nil {
-					panic(err)
-				}
+			err = copyfiles.Copy_file("main_resume_ref.pdf", newName_resume)
+			if err != nil {
+				panic(err)
+			}
 		}
 
 		appl.Attachments = append(appl.Attachments, newName_resume)
@@ -325,7 +314,7 @@ func (appl App) rename_files() error {
 		if err != nil {
 			panic(err)
 		}
-    appl.text_cover()
+		appl.text_cover()
 		appl.Attachments = append(appl.Attachments, newName_cover)
 
 	} else { // Just the CV
@@ -339,10 +328,10 @@ func (appl App) rename_files() error {
 				panic(err)
 			}
 		} else {
-				err = copyfiles.Copy_file("main_resume_ref.pdf", newName_resume)
-				if err != nil {
-					panic(err)
-				}
+			err = copyfiles.Copy_file("main_resume_ref.pdf", newName_resume)
+			if err != nil {
+				panic(err)
+			}
 		}
 
 		appl.Attachments = append(appl.Attachments, newName_resume)
@@ -350,7 +339,6 @@ func (appl App) rename_files() error {
 
 	return nil
 }
-
 
 /*
 DESC: Reads a file into a buffer and replaces strings key in map with coresponding values
@@ -376,7 +364,6 @@ func Replace_strings(inFile string, kvMap map[string]string) (string, error) {
 	return contents, nil
 }
 
-
 /*
 DESC: writes to new file
 IN: output file: outFile, string of contents to write: contents
@@ -391,7 +378,6 @@ func write_file(outFile, contents string) error {
 
 	return nil
 }
-
 
 /*
 DESC: generates copyable plain text version of cover letter

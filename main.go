@@ -4,19 +4,17 @@ Author: Joshua Haupt
 Last Modified: 07-13-2018
 */
 
-
 package main
 
 import (
-	"flag"
-	"fmt"
-	"os"
 	"./app"
 	"./date"
 	"./email"
 	"./log"
+	"flag"
+	"fmt"
+	"os"
 )
-
 
 func main() {
 
