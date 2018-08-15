@@ -1,0 +1,20 @@
+[COMPANY_NAME]
+[CURRENT_DATE]
+[COMPANY_CONTACT],
+
+[HEADING]
+
+My skills include:
+  - The ability to learn new technologies quickly
+  - Experience with programming languages such as Go, Python, C++, and Java
+  [ADDITIONAL_SKILL_1]
+  [ADDITIONAL_SKILL_2]
+
+[ADDITIONAL_NOTE]
+
+[RELOCATION]
+
+If you have any questions, feel free to contact me.
+
+Email: someone@something.com
+Cell: 314-111-1111

@@ -1,0 +1,34 @@
+
+
+%-----       letter       ---------------------------------------------------------
+% recipient data
+\recipient{[COMPANY_NAME]}{}
+\date{\today}
+\opening{[COMPANY_CONTACT],}
+\closing{Yours truly,}
+\enclosure[Attached]{Resume and CV}          % use an optional argument to use a string other than "Enclosure", or redefine \enclname
+\makelettertitle
+
+\setlength{\parindent}{0pt}
+\newcommand{\forceindent}{\leavevmode{\parindent=0.6cm\indent}}
+
+[HEADING] \newline
+
+\textbf{My skills include:}
+\begin{itemize}
+  \item The ability to learn new technologies quickly
+  \item Experience with programming languages such as Go, Python, C++, and Java
+  [ADDITIONAL_SKILL_1]
+  [ADDITIONAL_SKILL_2]
+\end{itemize}
+
+[ADDITIONAL_NOTE]
+
+[RELOCATION]
+
+If you have any questions, feel free to contact me.
+
+Email: \emaillink{someone@something.com} \newline
+Cell: 314-111-1111
+
+\makeletterclosing

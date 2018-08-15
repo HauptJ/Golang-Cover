@@ -14,8 +14,8 @@ import (
 /*
  Constant Declarations
 */
-const EMAIL = "josh@hauptj.com"
-const EMAIL_SMTP = "smtp.gmail.com"
+const EMAIL = "someone@something.com"
+const EMAIL_SMTP = "smtp.something.com"
 const EMAIL_COVER_TEMPL = "email_cover_template.html"
 const EMAIL_TEMPL = "email_template.html"
 
