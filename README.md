@@ -9,7 +9,7 @@ See the tutorial I wrote:
 ## Usage:
 
 #### Flags:
-- --cover: cover is included **[incl]**, seperate **[sep]** or not generated at all **[no]**
+- --cover: cover is included **[incl]**, seperate **[sep]**, or not generated at all **[no]**
 - --company: company name
 - --note: note to add at bottom
 - --skill1, --skill2: additional skills to list in cover
