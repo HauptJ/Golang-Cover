@@ -8,6 +8,9 @@ See the tutorial I wrote:
 
 ## Usage:
 
+#### Build:
+`go build main.go`
+
 #### Flags:
 - --cover: cover is included **[incl]**, seperate **[sep]**, or not generated at all **[no]**
 - --company: company name
