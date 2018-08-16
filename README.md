@@ -9,7 +9,12 @@ See the tutorial I wrote:
 ## Usage:
 
 #### Build:
-`go build main.go`
+1. [Download and install LATEX](https://www.latex-project.org/get/)
+2. Fill out the templated files
+3. Replace your name in `app/app.go`
+4. Replace your **Email address** and **SMTP server address** in `email/email.go`
+5. Download the Gomail package: `go get gopkg.in/gomail.v2`
+6. Build the binary: `go build main.go`
 
 #### Flags:
 - --opt: option, see list below
