@@ -1,23 +1,26 @@
 /*
 DESC: Writes to log file
 Author: Joshua Haupt
-Last Modified: 07-13-2018
+Last Modified: 08-15-2018
 */
+
 
 package log
 
 import (
+	"os"
+	"strings"
+  "strconv"
 	"../app"
 	"../date"
-	"os"
-	"strconv"
-	"strings"
 )
+
 
 /*
  Constant Declarations
 */
 const LOG_FILE = "app_log.csv"
+
 
 /*
 DESC: Writes to CSV log file
@@ -31,7 +34,7 @@ func Log_app(appl *app.App) error {
 		panic(err)
 	}
 
-	logString := date.Get_date("log") + "," + appl.Cover + "," + strings.Replace(appl.Company, ",", "_", -1) + "," +
+	logString := date.Get_date("log") + "," + strconv.Itoa(appl.Option) + "," + strings.Replace(appl.Company, ",", "_", -1) + "," +
 		strings.Replace(appl.Position, ",", "_", -1) + "," + strings.Replace(appl.Contact, ",", "_", -1) + "," +
 		strings.Replace(appl.Source, ",", "_", -1) + "," + strings.Replace(appl.Heading, ",", "_", -1) + "," +
 		strings.Replace(appl.Note, ",", "_", -1) + "," + strings.Replace(appl.Skill1, ",", "_", -1) + "," +

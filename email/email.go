@@ -1,23 +1,26 @@
 /*
 DESC: Writes to log file
 Author: Joshua Haupt
-Last Modified: 07-13-2018
+Last Modified: 08-15-2018
 */
+
 
 package email
 
 import (
-	"../app"
 	"gopkg.in/gomail.v2"
+	"../app"
 )
+
 
 /*
  Constant Declarations
 */
-const EMAIL = "someone@something.com"
-const EMAIL_SMTP = "smtp.something.com"
+const EMAIL = "josh@hauptj.com"
+const EMAIL_SMTP = "smtp.gmail.com"
 const EMAIL_COVER_TEMPL = "email_cover_template.html"
 const EMAIL_TEMPL = "email_template.html"
+
 
 /*
 DESC: sends email via SMTP
@@ -29,7 +32,7 @@ func Send_email(appl *app.App) error {
 	var body string
 	var err error
 
-	if appl.Cover == "incl" || appl.Cover == "sep" {
+	if appl.Option <= 6 && appl.Option > 0 {
 
 		body, err = app.Replace_strings(EMAIL_COVER_TEMPL, appl.KvMap_email)
 		if err != nil {

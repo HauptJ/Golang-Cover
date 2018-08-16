@@ -1,26 +1,27 @@
 /*
 DESC: Driver - takes in CLI flags
 Author: Joshua Haupt
-Last Modified: 07-13-2018
+Last Modified: 08-15-2018
 */
+
 
 package main
 
 import (
+	"flag"
+	"fmt"
+	"os"
 	"./app"
 	"./date"
 	"./email"
 	"./log"
-	"flag"
-	"fmt"
-	"os"
 )
+
 
 func main() {
 
 	fmt.Printf("%s: %s\n", "Current date", date.Get_date("email"))
-
-	coverPtr := flag.String("cover", "no", "[OPTIONAL] incl, sep or no cover letter")
+  optionPtr := flag.String("opt", "", "[REQUIRED] file option")
 	emailAddrPtr := flag.String("to", "", "[REQUIRED w/ --email] mail to address")
 	subjectPtr := flag.String("subject", "", "[OPTIONAL] email subject")
 	emailPassPtr := flag.String("pass", "", "[REQUIRED w/ --email] email account password")
@@ -35,20 +36,19 @@ func main() {
 	skillPtr2 := flag.String("skill2", "", "[OPTIONAL] additional skill 2")
 	urlPtr := flag.String("url", "", "[OPTIONAL] URL to postion AD")
 	testPtr := flag.String("test", "", "[OPTIONAL] test build not to be logged")
-	refPtr := flag.String("ref", "", "[OPTIONAL] include references")
 	flag.Parse()
 
 	// Make sure required company name is present if cover is generated
-	if *companyPtr == "" && (*coverPtr == "incl" || *coverPtr == "sep") {
+	if *companyPtr == "" {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
 
-	appl := app.App{Cover: *coverPtr, EmailAddr: *emailAddrPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
+	appl := app.App{EmailAddr: *emailAddrPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
 		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note: *notePtr, Skill1: *skillPtr1,
 		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr}
 
-	err := app.PharseFlags(*localPtr, *testPtr, *refPtr, &appl)
+	err := app.PharseFlags(*localPtr, *testPtr, *optionPtr, &appl)
 	if err != nil {
 		panic(err)
 	}
