@@ -1,7 +1,7 @@
 /*
 DESC: Generates Resume and Cover Letter
 Author: Joshua Haupt
-Last Modified: 08-15-2018
+Last Modified: 08-17-2018
 */
 
 
@@ -11,7 +11,7 @@ import (
   "io/ioutil"
 	"strings"
 	"strconv"
-  //"fmt"
+  "fmt"
   "../date"
   "../copyfiles"
   "../cmd"
@@ -212,19 +212,25 @@ func Build_pdf(appl *App) error {
 
   switch {
   case appl.Option == 1: // Everything w/ ref included as one file
+    go appl.text_cover()
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_all_ref\".tex"}
   case appl.Option == 2: // Everything w/ ref as seperate files
+    go appl.text_cover()
     cmdArgs_cover = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_cover\".tex"}
     cmdArgs_resume = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_resume\".tex"}
     cmdArgs_CV = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_CV_ref\".tex"}
   case appl.Option == 3: // Cover + CV w/ ref included as one file
+    go appl.text_cover()
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_cover_CV_ref\".tex"}
   case appl.Option == 4: // Cover + CV w/ ref as seperate files
+    go appl.text_cover()
     cmdArgs_cover = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_cover\".tex"}
     cmdArgs_CV = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_CV_ref\".tex"}
   case appl.Option == 5: // Cover + Resume included as one file
+    go appl.text_cover()
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_cover_resume\".tex"}
   case appl.Option == 6: // Cover + Resume as seperate files
+    go appl.text_cover()
     cmdArgs_cover = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_cover\".tex"}
     cmdArgs_resume = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_resume\".tex"}
   case appl.Option == 7: // CV w/ ref
@@ -277,7 +283,7 @@ DESC: Renames PDF cover letters and resumes
 IN: App object app
 OUT: nill on success
 */
-//TODO: functionize
+//TODO: functionize and move text_cover() calls
 func (appl App) rename_files() error {
 
 	var err error
@@ -293,7 +299,6 @@ func (appl App) rename_files() error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName)
-    appl.text_cover()
   case appl.Option == 2: // Everything w/ ref as seperate files
     // COVER
     newName_cover := COVER_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
@@ -302,7 +307,6 @@ func (appl App) rename_files() error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_cover)
-    appl.text_cover()
     // RESUME
     newName_resume := RESUME_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
     err = copyfiles.Copy_file("main_resume.pdf", newName_resume)
@@ -324,7 +328,6 @@ func (appl App) rename_files() error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName)
-    appl.text_cover()
   case appl.Option == 4: // Cover + CV w/ ref as seperate files
     // COVER
     newName_cover := COVER_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
@@ -333,7 +336,6 @@ func (appl App) rename_files() error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_cover)
-    appl.text_cover()
     // CV w/ ref
     newName_CV := CV_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
     err = copyfiles.Copy_file("main_CV_ref.pdf", newName_CV)
@@ -348,7 +350,6 @@ func (appl App) rename_files() error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName)
-    appl.text_cover()
   case appl.Option == 6: // Cover + Resume as seperate files
     // COVER
     newName_cover := COVER_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
@@ -357,7 +358,6 @@ func (appl App) rename_files() error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_cover)
-    appl.text_cover()
     // RESUME
     newName_resume := RESUME_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
     err = copyfiles.Copy_file("main_resume.pdf", newName_resume)
@@ -389,6 +389,11 @@ func (appl App) rename_files() error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_resume)
+  }
+
+  // print list of generated files
+  for i, _ := range(appl.Attachments){
+    fmt.Printf("Generated file: %s\n", appl.Attachments[i])
   }
 
 	return nil

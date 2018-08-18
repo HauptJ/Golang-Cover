@@ -4,14 +4,16 @@ Author: Joshua Haupt
 Last Modified: 07-13-2018
 */
 
+
 package cmd
 
 import (
-	"bufio"
-	"fmt"
 	"os"
-	"os/exec"
+  "os/exec"
+  "fmt"
+  "bufio"
 )
+
 
 /*
 DESC: runs a bash command

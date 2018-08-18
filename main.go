@@ -4,24 +4,22 @@ Author: Joshua Haupt
 Last Modified: 08-15-2018
 */
 
-
 package main
 
 import (
-	"flag"
-	"fmt"
-	"os"
 	"./app"
 	"./date"
 	"./email"
 	"./log"
+	"flag"
+	"fmt"
+	"os"
 )
-
 
 func main() {
 
 	fmt.Printf("%s: %s\n", "Current date", date.Get_date("email"))
-  optionPtr := flag.String("opt", "", "[REQUIRED] file option")
+	optionPtr := flag.String("opt", "", "[REQUIRED] file option")
 	emailAddrPtr := flag.String("to", "", "[REQUIRED w/ --email] mail to address")
 	subjectPtr := flag.String("subject", "", "[OPTIONAL] email subject")
 	emailPassPtr := flag.String("pass", "", "[REQUIRED w/ --email] email account password")

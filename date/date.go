@@ -4,11 +4,13 @@ Author: Joshua Haupt
 Last Modified: 07-13-2018
 */
 
+
 package date
 
 import (
 	"time"
 )
+
 
 /*
  Constant Declarations
@@ -16,6 +18,7 @@ import (
 const FILENAME_TIME_FMT = "01_02_2006"
 const EMAIL_TIME_FMT = "January _2, 2006"
 const LOG_TIME_FMT = "01-02-2006"
+
 
 /*
 DESC: Gets the current date
