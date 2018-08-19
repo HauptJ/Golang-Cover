@@ -1,0 +1,18 @@
+# Travis CI test file to test Golang-Cover project
+
+sudo: required
+before_install:
+  - sudo apt-get install texlive-full
+
+# Enable Golang support
+language: go
+
+# Compiler selection
+go:
+  - 1.10.1
+  - master
+
+
+# Build steps
+script:
+  - go get 
