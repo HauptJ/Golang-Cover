@@ -1,12 +1,12 @@
 # Golang-Cover
 Golang cover letter generator
 
-[![Build Status](https://travis-ci.org/HauptJ/Golang-Cover.svg?branch=master)](https://travis-ci.org/HauptJ/Golang-Cover)
+This repository contains a mirror of the Golang source files used in a private repository that I use for my resume and CV.
 
 See the tutorial I wrote:
 [Using Golang to Generate Custom Cover Letters](https://hauptj.com/2018/06/12/using-golang-to-generate-custom-cover-letters/)
 
-**UPDATE:** I have now added sample template files.
+[![Build Status](https://travis-ci.org/HauptJ/Golang-Cover.svg?branch=master)](https://travis-ci.org/HauptJ/Golang-Cover)
 
 ## Usage:
 
