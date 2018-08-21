@@ -74,6 +74,13 @@ type App struct {
 }
 
 
+func GetAttachments(appl *App) []string {
+  for _, attachment := range appl.Attachments {
+    fmt.Println(attachment)
+  }
+  return appl.Attachments
+}
+
 /*
 DESC: parses flag string values to generate App object values
 IN: the flag values as strings and the App object
@@ -269,7 +276,7 @@ func Build_pdf(appl *App) error {
     }
   }
 
-  err = appl.rename_files()
+  err = rename_files(appl)
   if err != nil {
     panic(err)
   }
@@ -284,7 +291,7 @@ IN: App object app
 OUT: nill on success
 */
 //TODO: functionize and move text_cover() calls
-func (appl App) rename_files() error {
+func rename_files(appl *App) error {
 
 	var err error
 

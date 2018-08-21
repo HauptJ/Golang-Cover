@@ -1,7 +1,7 @@
 /*
 DESC: Writes to log file
 Author: Joshua Haupt
-Last Modified: 08-15-2018
+Last Modified: 08-21-2018
 */
 
 
@@ -10,6 +10,8 @@ package email
 import (
 	"gopkg.in/gomail.v2"
 	"../app"
+	"fmt"
+	"os"
 )
 
 
@@ -54,6 +56,11 @@ func Send_email(appl *app.App) error {
 
 	for _, attachment := range appl.Attachments {
 		m.Attach(attachment)
+		fmt.Printf("Attached file: %s\n", attachment)
+	}
+
+	if len(appl.Attachments) <= 0 { // abort program if there are no attachments
+		os.Exit(2)
 	}
 
 	d := gomail.NewDialer(EMAIL_SMTP, 587, EMAIL, appl.EmailPass)
