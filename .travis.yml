@@ -12,4 +12,4 @@ before_install:
 # Build steps
 script:
   - go build main.go
-  - go run ./main --opt 8 --company "test inc"
+  - ./main --opt 8 --company "test inc"
