@@ -12,4 +12,6 @@ before_install:
 # Build steps
 script:
   - go build main.go
-  - ./main --opt 8 --company "test inc"
+  - ./main --opt 7 --company "test inc 7" # CV w/ ref
+  - ./main --opt 8 --company "test inc 8" #  CV w/o ref
+  - ./main --opt 9 --company "test inc 9" # Resume only
