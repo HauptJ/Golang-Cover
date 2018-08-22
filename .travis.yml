@@ -2,10 +2,10 @@
 
 sudo: required
 before_install:
-  - sudo apt-get install texlive-full
-  - sudo add-apt-repository ppa:gophers/archive
-  - sudo apt-get update
-  - sudo apt-get install golang-1.10-go
+  - sudo apt-get -y install texlive-full
+  - sudo add-apt-repository -y ppa:gophers/archive
+  - sudo apt-get -y update
+  - sudo apt-get -y install golang-1.10-go
 
 # # Enable Golang support
 # language: go
