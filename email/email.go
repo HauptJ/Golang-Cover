@@ -62,7 +62,7 @@ func Send_email(appl *app.App) error {
 		os.Exit(2)
 	}
 
-	d := gomail.NewDialer(EMAIL_SMTP, 587, EMAIL, appl.EmailPass)
+	d := gomail.NewDialer(EMAIL_SMTP, 587, appl.MailFrom, appl.EmailPass)
 
 	if err := d.DialAndSend(m); err != nil {
 		panic(err)
