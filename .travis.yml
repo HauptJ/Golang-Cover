@@ -2,20 +2,16 @@
 
 sudo: required
 before_install:
-  - sudo apt-get install texlive-full
-  - sudo add-apt-repository ppa:gophers/archive
-  - sudo apt-get update
-  - sudo apt-get install golang-1.10-go
+  - sudo apt-get -y install texlive-full
+  - sudo add-apt-repository -y ppa:gophers/archive
+  - sudo apt-get -y update
+  - sudo apt-get -y install golang-1.10-go
+  - go get gopkg.in/gomail.v2
 
-# # Enable Golang support
-# language: go
-#
-# # Compiler selection
-# go:
-#   - 1.10.1
-#   - master
 
 # Build steps
 script:
-  - go get gopkg.in/gomail.v2
   - go build main.go
+  - ./main --opt 7 --company "test inc 7" # CV w/ ref
+  - ./main --opt 8 --company "test inc 8" #  CV w/o ref
+  - ./main --opt 9 --company "test inc 9" # Resume only
