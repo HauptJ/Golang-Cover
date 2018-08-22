@@ -41,7 +41,8 @@ const DISTANT = "I am currently located in the St. Louis area, however, I am rec
 
 type App struct {
   Option int
-	EmailAddr string
+	MailTo string
+  MailFrom string
 	Subject string
 	EmailPass string
 	Heading string
@@ -154,7 +155,7 @@ func PharseFlags(localFlag, testFlag, optionFlag string, appl *App) error {
 			"[ADDITIONAL_NOTE]": appl.Note, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine}
 	}
 
-	if appl.EmailAddr != "" && appl.EmailPass != "" {
+	if appl.MailTo != "" && appl.EmailPass != ""  && appl.MailFrom != "" {
 		appl.KvMap_email = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
 			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_email, "[ADDITIONAL_SKILL_2]": appl.Skill2_email,
 			"[ADDITIONAL_NOTE]": appl.Note_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email}

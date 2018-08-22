@@ -18,7 +18,6 @@ import (
 /*
  Constant Declarations
 */
-const EMAIL = "josh@hauptj.com"
 const EMAIL_SMTP = "smtp.gmail.com"
 const EMAIL_COVER_TEMPL = "email_cover_template.html"
 const EMAIL_TEMPL = "email_template.html"
@@ -49,8 +48,8 @@ func Send_email(appl *app.App) error {
 	}
 
 	m := gomail.NewMessage()
-	m.SetHeader("From", EMAIL)
-	m.SetHeader("To", appl.EmailAddr)
+	m.SetHeader("From", appl.MailFrom)
+	m.SetHeader("To", appl.MailTo)
 	m.SetHeader("Subject", appl.Subject)
 	m.SetBody("text/html", body)
 

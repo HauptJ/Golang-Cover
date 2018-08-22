@@ -20,8 +20,9 @@ func main() {
 
 	fmt.Printf("%s: %s\n", "Current date", date.Get_date("email"))
 	optionPtr := flag.String("opt", "", "[REQUIRED] file option")
-	emailAddrPtr := flag.String("to", "", "[REQUIRED w/ --email] mail to address")
+	mailToPtr := flag.String("to", "", "[REQUIRED w/ --email] mail to address")
 	subjectPtr := flag.String("subject", "", "[OPTIONAL] email subject")
+	mailFromPtr := flag.String("from", "", "[OPTIONAL] mail from address")
 	emailPassPtr := flag.String("pass", "", "[REQUIRED w/ --email] email account password")
 	headingPtr := flag.String("head", "", "[OPTIONAL] custom heading message")
 	companyPtr := flag.String("company", "", "[REQUIRED] company name")
@@ -42,7 +43,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	appl := app.App{EmailAddr: *emailAddrPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
+	appl := app.App{MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
 		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note: *notePtr, Skill1: *skillPtr1,
 		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr}
 
@@ -57,13 +58,13 @@ func main() {
 	}
 
 	// send Email
-	if appl.EmailAddr != "" && appl.EmailPass != "" {
+	if appl.MailTo != "" && appl.EmailPass != "" && appl.MailFrom != "" {
 
 		err = email.Send_email(&appl)
 		if err != nil {
 			panic(err)
 		} else {
-			fmt.Printf("%s: %s %s: %s\n", "Email sent to", appl.EmailAddr, "Subject", appl.Subject)
+			fmt.Printf("%s: %s %s: %s\n", "Email sent to", appl.MailTo, "Subject", appl.Subject)
 		}
 
 	}
