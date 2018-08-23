@@ -36,9 +36,9 @@ func main() {
 	urlPtr := flag.String("url", "", "[OPTIONAL] URL to postion AD")
 	testPtr := flag.String("test", "", "[OPTIONAL] test build not to be logged") //TODO: use flag.Bool()
 	// Google Cloud Storage Specific
-	gcUpload := flag.Bool("upload", false, "[OPTIONAL] upload file to bucket")
-	gcBucketPtr := flag.String("bucket", "", "[OPTIONAL] the bucket to upload content to")
-	gcProjectIDPtr := flag.String("project", "", "[OPTIONAL] the ID of the GCP project to use")
+	gcUploadPtr := flag.Bool("upload", false, "[OPTIONAL] upload file to bucket")
+	gcBucketPtr := flag.String("bucket", "", "[REQUIRED w/ --upload] the bucket to upload content to")
+	gcProjectIDPtr := flag.String("project", "", "[REQUIRED w/ --upload] the ID of the GCP project to use")
 	flag.Parse()
 
 	// Make sure required company name is present if cover is generated
@@ -49,7 +49,7 @@ func main() {
 
 	appl := app.App{MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
 		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note: *notePtr, Skill1: *skillPtr1,
-		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr}
+		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr, GCUploadFile: *gcUploadPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr}
 
 	err := app.PharseFlags(*localPtr, *testPtr, *optionPtr, &appl)
 	if err != nil {
