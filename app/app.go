@@ -1,7 +1,7 @@
 /*
 DESC: Generates Resume and Cover Letter
 Author: Joshua Haupt
-Last Modified: 08-17-2018
+Last Modified: 08-22-2018
 */
 
 
@@ -15,6 +15,7 @@ import (
   "../date"
   "../copyfiles"
   "../cmd"
+  "../gcloud"
 )
 
 
@@ -38,7 +39,7 @@ const LOCAL = "I am currently located in the St. Louis area, and I am also recep
 const DISTANT = "I am currently located in the St. Louis area, however, I am receptive to relocation."
 
 
-
+// TODO: Enscapsulateion?
 type App struct {
   Option int
 	MailTo string
@@ -72,15 +73,11 @@ type App struct {
 	KvMap_email map[string]string
 	KvMap_text map[string]string
 	Attachments []string
+  // Google Cloud Storage
+  GCBucket string
+  GCProjectID string
 }
 
-
-func GetAttachments(appl *App) []string {
-  for _, attachment := range appl.Attachments {
-    fmt.Println(attachment)
-  }
-  return appl.Attachments
-}
 
 /*
 DESC: parses flag string values to generate App object values
@@ -381,6 +378,7 @@ func rename_files(appl *App) error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_CV)
+    err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, newName_CV, true) // upload to Google Cloud Storage
   case appl.Option == 8: // CV w/0 ref
     // CV w/o ref
     newName_CV := CV_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"

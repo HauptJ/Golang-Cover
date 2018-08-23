@@ -30,11 +30,14 @@ func main() {
 	positionPtr := flag.String("position", "", "[REQUIRED w/o --head] position name")
 	sourcePtr := flag.String("source", "", "[REQUIRED w/o --head] position source")
 	notePtr := flag.String("note", "", "[OPTIONAL] additional note")
-	localPtr := flag.String("local", "", "[OPTIONAL] is the position local")
+	localPtr := flag.String("local", "", "[OPTIONAL] is the position local") //TODO: use flag.Bool()
 	skillPtr1 := flag.String("skill1", "", "[OPTIONAL] additional skill 1")
 	skillPtr2 := flag.String("skill2", "", "[OPTIONAL] additional skill 2")
 	urlPtr := flag.String("url", "", "[OPTIONAL] URL to postion AD")
-	testPtr := flag.String("test", "", "[OPTIONAL] test build not to be logged")
+	testPtr := flag.String("test", "", "[OPTIONAL] test build not to be logged") //TODO: use flag.Bool()
+	// Google Cloud Storage Specific
+	gcBucketPtr := flag.String("bucket", "", "the bucket to upload content to")
+	gcProjectIDPtr := flag.String("project", "", "the ID of the GCP project to use")
 	flag.Parse()
 
 	// Make sure required company name is present if cover is generated
@@ -45,7 +48,7 @@ func main() {
 
 	appl := app.App{MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
 		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note: *notePtr, Skill1: *skillPtr1,
-		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr}
+		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr}
 
 	err := app.PharseFlags(*localPtr, *testPtr, *optionPtr, &appl)
 	if err != nil {
