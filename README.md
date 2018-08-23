@@ -19,7 +19,7 @@ See the tutorial I wrote:
 6. Download the following Go packages:
     1. `go get gopkg.in/gomail.v2`
     2. `go get cloud.google.com/go/storage`
-    3. `golang.org/x/net/context`
+    3. `go get golang.org/x/net/context`
 7. Build the binary: `go build main.go`
 
 #### Flags:
