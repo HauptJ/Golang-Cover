@@ -7,11 +7,19 @@ before_install:
   - sudo apt-get -y update
   - sudo apt-get -y install golang-1.10-go
   - go get gopkg.in/gomail.v2
+  - go get cloud.google.com/go/storage
+  - go get golang.org/x/net/context
 
 
 # Build steps
 script:
   - go build main.go
+  - ./main --opt 1 --company "test 1a" --source "test source" --position --"test position"
+  - ./main --opt 2 --company "test 2a" --source "test source" --position --"test position"
+  - ./main --opt 3 --company "test 3a" --source "test source" --position --"test position"
+  - ./main --opt 4 --company "test 4a" --source "test source" --position --"test position"
+  - ./main --opt 5 --company "test 5a" --source "test source" --position --"test position"
+  - ./main --opt 6 --company "test 6a" --source "test source" --position --"test position"
   - ./main --opt 7 --company "test inc 7" # CV w/ ref
   - ./main --opt 8 --company "test inc 8" #  CV w/o ref
   - ./main --opt 9 --company "test inc 9" # Resume only

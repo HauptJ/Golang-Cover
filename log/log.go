@@ -1,7 +1,7 @@
 /*
 DESC: Writes to log file
 Author: Joshua Haupt
-Last Modified: 08-15-2018
+Last Modified: 08-22-2018
 */
 
 
@@ -38,7 +38,7 @@ func Log_app(appl *app.App) error {
 		strings.Replace(appl.Position, ",", "_", -1) + "," + strings.Replace(appl.Contact, ",", "_", -1) + "," +
 		strings.Replace(appl.Source, ",", "_", -1) + "," + strings.Replace(appl.Heading, ",", "_", -1) + "," +
 		strings.Replace(appl.Note, ",", "_", -1) + "," + strings.Replace(appl.Skill1, ",", "_", -1) + "," +
-		strings.Replace(appl.Skill2, ",", "_", -1) + "," + strconv.FormatBool(appl.Local) + "," + appl.Url + "," + appl.EmailAddr + "\n"
+		strings.Replace(appl.Skill2, ",", "_", -1) + "," + strconv.FormatBool(appl.Local) + "," + appl.Url + "," + appl.MailTo + "\n"
 
 	_, err = log.Write([]byte(logString))
 	if err != nil {

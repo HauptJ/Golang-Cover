@@ -5,10 +5,10 @@
 [HEADING]
 
 My skills include:
-  - The ability to learn new technologies quickly
-  - Experience with programming languages such as Go, Python, C++, and Java
   [ADDITIONAL_SKILL_1]
   [ADDITIONAL_SKILL_2]
+  - The ability to learn new technologies quickly
+  - Experience with programming languages such as Go, Python, C++, and Java
 
 [ADDITIONAL_NOTE]
 

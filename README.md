@@ -16,7 +16,10 @@ See the tutorial I wrote:
 3. Fill out the templated files
 4. Replace your name in `app/app.go`
 5. Replace your **Email address** and **SMTP server address** in `email/email.go`
-6. Download the Gomail package: `go get gopkg.in/gomail.v2`
+6. Download the following Go packages:
+    1. `go get gopkg.in/gomail.v2`
+    2. `go get cloud.google.com/go/storage`
+    3. `golang.org/x/net/context`
 7. Build the binary: `go build main.go`
 
 #### Flags:
@@ -33,6 +36,9 @@ See the tutorial I wrote:
 - `--subject`: **[optional]** override default Email subject w/ custom one
 - `--url`: **[optional]** URL to position ad
 - `--test`: **[optional]** run test build which will not to be logged
+- `--upload`: **[optional]** upload file to Google Cloud storage bucket **NOTE** only applies to opt `7`
+- `--bucket`: **[REQUIRED w/ --upload]** the bucket to upload content to
+- `--project`: **[REQUIRED w/ --upload]** the ID of the GCP project to use
 
 #### Options:
 - `1`.) Everything w/ ref included as one file

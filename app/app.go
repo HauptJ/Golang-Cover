@@ -1,7 +1,7 @@
 /*
 DESC: Generates Resume and Cover Letter
 Author: Joshua Haupt
-Last Modified: 08-17-2018
+Last Modified: 08-22-2018
 */
 
 
@@ -15,6 +15,7 @@ import (
   "../date"
   "../copyfiles"
   "../cmd"
+  "../gcloud"
 )
 
 
@@ -38,10 +39,11 @@ const LOCAL = "I am currently located in the St. Louis area, and I am also recep
 const DISTANT = "I am currently located in the St. Louis area, however, I am receptive to relocation."
 
 
-
+// TODO: Enscapsulateion?
 type App struct {
   Option int
-	EmailAddr string
+	MailTo string
+  MailFrom string
 	Subject string
 	EmailPass string
 	Heading string
@@ -71,15 +73,12 @@ type App struct {
 	KvMap_email map[string]string
 	KvMap_text map[string]string
 	Attachments []string
+  // Google Cloud Storage
+  GCUploadFile bool
+  GCBucket string
+  GCProjectID string
 }
 
-
-func GetAttachments(appl *App) []string {
-  for _, attachment := range appl.Attachments {
-    fmt.Println(attachment)
-  }
-  return appl.Attachments
-}
 
 /*
 DESC: parses flag string values to generate App object values
@@ -143,7 +142,7 @@ func PharseFlags(localFlag, testFlag, optionFlag string, appl *App) error {
 	appl.ReloLine_email = "<div><p style=\"text-align:left;\">" + appl.ReloLine + "</p></div>"
 
 
-	if appl.Option <= 4 && appl.Option > 0 {
+	if appl.Option <= 6 && appl.Option > 0 {
 		appl.KvMap_tex = map[string]string{"[COMPANY_NAME]": strings.Replace(appl.Company, "&", "\\&", -1), "[COMPANY_CONTACT]": strings.Replace(appl.Contact, "&", "\\&", -1),
 			"[POSITION_NAME]": strings.Replace(appl.Position, "&", "\\&", -1), "[HEADING]": strings.Replace(appl.Heading, "&", "\\&", -1), "[POSITION_SOURCE]": strings.Replace(appl.Source, "&", "\\&", -1),
 			"[ADDITIONAL_SKILL_1]": strings.Replace(appl.Skill1_tex, "&", "\\&", -1), "[ADDITIONAL_SKILL_2]": strings.Replace(appl.Skill2_tex, "&", "\\&", -1),
@@ -154,7 +153,7 @@ func PharseFlags(localFlag, testFlag, optionFlag string, appl *App) error {
 			"[ADDITIONAL_NOTE]": appl.Note, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine}
 	}
 
-	if appl.EmailAddr != "" && appl.EmailPass != "" {
+	if appl.MailTo != "" && appl.EmailPass != ""  && appl.MailFrom != "" {
 		appl.KvMap_email = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
 			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_email, "[ADDITIONAL_SKILL_2]": appl.Skill2_email,
 			"[ADDITIONAL_NOTE]": appl.Note_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email}
@@ -380,6 +379,12 @@ func rename_files(appl *App) error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_CV)
+    if appl.GCUploadFile == true {
+      err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, newName_CV, true) // upload to Google Cloud Storage
+      if err != nil {
+        panic(err)
+      }
+    }
   case appl.Option == 8: // CV w/0 ref
     // CV w/o ref
     newName_CV := CV_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
