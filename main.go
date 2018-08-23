@@ -19,7 +19,7 @@ import (
 func main() {
 
 	fmt.Printf("%s: %s\n", "Current date", date.Get_date("email"))
-	optionPtr := flag.String("opt", "", "[REQUIRED] file option")
+	optionPtr := flag.Int("opt", 0, "[REQUIRED] file option")
 	mailToPtr := flag.String("to", "", "[REQUIRED w/ --email] mail to address")
 	subjectPtr := flag.String("subject", "", "[OPTIONAL] email subject")
 	mailFromPtr := flag.String("from", "", "[OPTIONAL] mail from address")
@@ -30,11 +30,11 @@ func main() {
 	positionPtr := flag.String("position", "", "[REQUIRED w/o --head] position name")
 	sourcePtr := flag.String("source", "", "[REQUIRED w/o --head] position source")
 	notePtr := flag.String("note", "", "[OPTIONAL] additional note")
-	localPtr := flag.String("local", "", "[OPTIONAL] is the position local") //TODO: use flag.Bool()
+	localPtr := flag.Bool("local", true, "[OPTIONAL] is the position local")
 	skillPtr1 := flag.String("skill1", "", "[OPTIONAL] additional skill 1")
 	skillPtr2 := flag.String("skill2", "", "[OPTIONAL] additional skill 2")
 	urlPtr := flag.String("url", "", "[OPTIONAL] URL to postion AD")
-	testPtr := flag.String("test", "", "[OPTIONAL] test build not to be logged") //TODO: use flag.Bool()
+	testPtr := flag.Bool("test", false, "[OPTIONAL] test build not to be logged")
 	// Google Cloud Storage Specific
 	gcUploadPtr := flag.Bool("upload", false, "[OPTIONAL] upload file to bucket")
 	gcBucketPtr := flag.String("bucket", "", "[REQUIRED w/ --upload] the bucket to upload content to")
@@ -42,16 +42,16 @@ func main() {
 	flag.Parse()
 
 	// Make sure required company name is present if cover is generated
-	if *companyPtr == "" {
+	if *companyPtr == "" || *optionPtr < 0 {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
 
-	appl := app.App{MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
+	appl := app.App{Option: *optionPtr, Local: *localPtr, Test: *testPtr, MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
 		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note: *notePtr, Skill1: *skillPtr1,
 		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr, GCUploadFile: *gcUploadPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr}
 
-	err := app.PharseFlags(*localPtr, *testPtr, *optionPtr, &appl)
+	err := app.PharseFlags(&appl)
 	if err != nil {
 		panic(err)
 	}

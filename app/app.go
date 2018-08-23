@@ -10,7 +10,6 @@ package app
 import (
   "io/ioutil"
 	"strings"
-	"strconv"
   "fmt"
   "../date"
   "../copyfiles"
@@ -68,7 +67,6 @@ type App struct {
 	Skill2_text string
 	Url string
 	Test bool
-	Ref bool
 	KvMap_tex map[string]string
 	KvMap_email map[string]string
 	KvMap_text map[string]string
@@ -85,12 +83,7 @@ DESC: parses flag string values to generate App object values
 IN: the flag values as strings and the App object
 OUT: nil on success
 */
-func PharseFlags(localFlag, testFlag, optionFlag string, appl *App) error {
-
-	// Function Level Variables
-	var err error
-
-  appl.Option, err = strconv.Atoi(optionFlag)
+func PharseFlags(appl *App) error {
 
 	if appl.Contact == "" {
 		appl.Contact = DEFAULT_CONTACT
@@ -126,12 +119,6 @@ func PharseFlags(localFlag, testFlag, optionFlag string, appl *App) error {
 		appl.Skill2_text = "- " + appl.Skill2
 	}
 
-
-	appl.Local, err = parseBool(localFlag, true)
-	if err != nil {
-		panic(err)
-	}
-
 	if appl.Local == true {
 		appl.ReloLine = LOCAL
 	} else if appl.Local == false {
@@ -165,32 +152,7 @@ func PharseFlags(localFlag, testFlag, optionFlag string, appl *App) error {
 
 	}
 
-	appl.Test, err = parseBool(testFlag, false)
-	if err != nil {
-		panic(err)
-	}
-
 	return nil
-}
-
-
-/*
-DESC: parses a string for a bool value and if a blank string is provided, returns specified default
-IN: the string to pharse and a default bool value
-OUT: the bool value of the parsed string
-*/
-func parseBool(input string, deflt bool) (output bool, err error) {
-	if input == "" { //default if nothing specified
-		output = deflt
-	} else if input != "" {
-		output, err = strconv.ParseBool(input)
-		if err != nil {
-			panic(err)
-		}
-	} else {
-		panic("input undefined")
-	}
-	return output, nil
 }
 
 
