@@ -36,8 +36,9 @@ func main() {
 	urlPtr := flag.String("url", "", "[OPTIONAL] URL to postion AD")
 	testPtr := flag.String("test", "", "[OPTIONAL] test build not to be logged") //TODO: use flag.Bool()
 	// Google Cloud Storage Specific
-	gcBucketPtr := flag.String("bucket", "", "the bucket to upload content to")
-	gcProjectIDPtr := flag.String("project", "", "the ID of the GCP project to use")
+	gcUpload := flag.Bool("upload", false, "[OPTIONAL] upload file to bucket")
+	gcBucketPtr := flag.String("bucket", "", "[OPTIONAL] the bucket to upload content to")
+	gcProjectIDPtr := flag.String("project", "", "[OPTIONAL] the ID of the GCP project to use")
 	flag.Parse()
 
 	// Make sure required company name is present if cover is generated

@@ -2,7 +2,7 @@
 DESC: Uploads file to a Google Cloud stroage bucket
 Author: Joshua Haupt
 Last Modified: 08-23-2018
-Source: https://github.com/GoogleCloudPlatform/golang-samples/blob/master/storage/gcsupload/gcsupload.go
+Modified from source: https://github.com/GoogleCloudPlatform/golang-samples/blob/master/storage/gcsupload/gcsupload.go
 */
 
 package gcloud

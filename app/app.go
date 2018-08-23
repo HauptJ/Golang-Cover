@@ -74,6 +74,7 @@ type App struct {
 	KvMap_text map[string]string
 	Attachments []string
   // Google Cloud Storage
+  Upload bool
   GCBucket string
   GCProjectID string
 }
@@ -378,7 +379,12 @@ func rename_files(appl *App) error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_CV)
-    err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, newName_CV, true) // upload to Google Cloud Storage
+    if appl.Upload == true {
+      err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, newName_CV, true) // upload to Google Cloud Storage
+      if err != nil {
+        panic(err)
+      }
+    }
   case appl.Option == 8: // CV w/0 ref
     // CV w/o ref
     newName_CV := CV_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
