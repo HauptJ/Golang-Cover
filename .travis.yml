@@ -13,18 +13,33 @@ before_install:
 
 script:
   - go build main.go
-  - ./main --opt 1 --company "test 1a" --source "test source" --position --"test position" # Cover, Resume, and CV all in one file
-  - ./main --opt 1 --company "test 1b" --source "test source" --position --"test position" --contact "test contact" --note "test note" --skill1 "test skill1" --skill2 "test skill2"
-  - ./main --opt 2 --company "test 2a" --source "test source" --position --"test position" # Cover, Resume, and CV as seperate files
-  - ./main --opt 2 --company "test 2b" --source "test source" --position --"test position" --contact "test contact" --note "test note" --skill1 "test skill1" --skill2 "test skill2"
-  - ./main --opt 3 --company "test 3a" --source "test source" --position --"test position" # Cover and CV w/ ref included as one file
-  - ./main --opt 3 --company "test 3b" --source "test source" --position --"test position" --contact "test contact" --note "test note" --skill1 "test skill1" --skill2 "test skill2"
-  - ./main --opt 4 --company "test 4a" --source "test source" --position --"test position" # Cover and CV w/ ref as seperate files
-  - ./main --opt 4 --company "test 4b" --source "test source" --position --"test position" --contact "test contact" --note "test note" --skill1 "test skill1" --skill2 "test skill2"
-  - ./main --opt 5 --company "test 5a" --source "test source" --position --"test position" # Cover and Resume included as one file
-  - ./main --opt 5 --company "test 5b" --source "test source" --position --"test position" --contact "test contact" --note "test note" --skill1 "test skill1" --skill2 "test skill2"
-  - ./main --opt 6 --company "test 6a" --source "test source" --position --"test position" # Cover and Resume as seperate files
-  - ./main --opt 6 --company "test 6b" --source "test source" --position --"test position" --contact "test contact" --note "test note" --skill1 "test skill1" --skill2 "test skill2"
-  - ./main --opt 7 --company "test inc 7" # CV w/ ref
-  - ./main --opt 8 --company "test inc 8" # CV w/o ref
-  - ./main --opt 9 --company "test inc 9" # Resume only
+  # 1.) Cover, Resume, and CV all in one file
+  - ./main --opt 1 --company "test 1a" --source "test source" --position --"test position"
+  - ./main --opt 1 --company "test 1b" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --skill1 "test skill1" --skill2 "test skill2"
+  - ./main --opt 1 --company "test 1c" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --note2 "test note2" --skill1 "test skill1" --skill2 "test skill2" --skill3 "test skill3" --local true --test true --contact "test contact"
+  # 2.) Cover, Resume, and CV as seperate files
+  - ./main --opt 2 --company "test 2a" --source "test source" --position --"test position"
+  - ./main --opt 2 --company "test 2b" --source "test source" --position --"test position" --contact "test contact" --note1 "test not1e" --skill1 "test skill1" --skill2 "test skill2"
+  - ./main --opt 2 --company "test 2c" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --note2 "test note2" --skill1 "test skill1" --skill2 "test skill2" --skill3 "test skill3" --local true --test true --contact "test contact"
+  # 3.) Cover and CV w/ ref included as one file
+  - ./main --opt 3 --company "test 3a" --source "test source" --position --"test position"
+  - ./main --opt 3 --company "test 3b" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --skill1 "test skill1" --skill2 "test skill2"
+  - ./main --opt 3 --company "test 3c" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --note2 "test note2" --skill1 "test skill1" --skill2 "test skill2" --skill3 "test skill3" --local true --test true --contact "test contact"
+  # 4.) Cover and CV w/ ref as seperate files
+  - ./main --opt 4 --company "test 4a" --source "test source" --position --"test position"
+  - ./main --opt 4 --company "test 4b" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --skill1 "test skill1" --skill2 "test skill2"
+  - ./main --opt 4 --company "test 4c" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --note2 "test note2" --skill1 "test skill1" --skill2 "test skill2" --skill3 "test skill3" --local true --test true --contact "test contact"
+  # 5.) Cover and Resume included as one file
+  - ./main --opt 5 --company "test 5a" --source "test source" --position --"test position"
+  - ./main --opt 5 --company "test 5b" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --skill1 "test skill1" --skill2 "test skill2"
+  - ./main --opt 5 --company "test 3c" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --note2 "test note2" --skill1 "test skill1" --skill2 "test skill2" --skill3 "test skill3" --local true --test true --contact "test contact"
+  # 6.) Cover and Resume as seperate files
+  - ./main --opt 6 --company "test 6a" --source "test source" --position --"test position"
+  - ./main --opt 6 --company "test 6b" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --skill1 "test skill1" --skill2 "test skill2"
+  - ./main --opt 6 --company "test 6c" --source "test source" --position --"test position" --contact "test contact" --note1 "test note1" --note2 "test note2" --skill1 "test skill1" --skill2 "test skill2" --skill3 "test skill3" --local true --test true --contact "test contact"
+  # 7.) CV w/ ref
+  - ./main --opt 7 --company "test inc 7"
+  # 8.) CV w/o ref
+  - ./main --opt 8 --company "test inc 8"
+  # 9+) Resume only
+  - ./main --opt 9 --company "test inc 9"

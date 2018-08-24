@@ -7,10 +7,13 @@
 My skills include:
   [ADDITIONAL_SKILL_1]
   [ADDITIONAL_SKILL_2]
+  [ADDITIONAL_SKILL_3]
   - The ability to learn new technologies quickly
   - Experience with programming languages such as Go, Python, C++, and Java
 
-[ADDITIONAL_NOTE]
+[ADDITIONAL_NOTE1]
+
+[ADDITIONAL_NOTE2]
 
 [RELOCATION]
 
