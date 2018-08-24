@@ -46,14 +46,19 @@ type App struct {
 	Subject string
 	EmailPass string
 	Heading string
+  HeadingAdd string
 	Company string
 	Contact string
 	Position string
 	Source string
-	Note string
-	Note_tex string
-	Note_email string
-	Note_text string
+	Note1 string
+	Note1_tex string
+	Note1_email string
+	Note1_text string
+  Note2 string
+  Note2_tex string
+  Note2_email string
+  Note2_text string
 	Local bool
 	ReloLine string
 	ReloLine_email string
@@ -65,6 +70,10 @@ type App struct {
 	Skill2_tex string
 	Skill2_email string
 	Skill2_text string
+  Skill3 string
+  Skill3_tex string
+  Skill3_email string
+  Skill3_text string
 	Url string
 	Test bool
 	KvMap_tex map[string]string
@@ -92,7 +101,7 @@ func PharseFlags(appl *App) error {
 	}
 
 	if appl.Heading == "" && appl.Position != "" && appl.Source != "" {
-		appl.Heading = "I am excited about the possibility of joining your organization in the position of " + appl.Position + ", as advertised on " + appl.Source + "." // default heading
+		appl.Heading = "I am excited about the possibility of joining your organization in the position of " + appl.Position + ", as advertised on " + appl.Source + ". " + appl.HeadingAdd// default heading
 	} else {
 		if appl.Option <= 6 && appl.Option > 0 {
 			panic("heading undefined")
@@ -100,10 +109,16 @@ func PharseFlags(appl *App) error {
 	}
 
 	// If additional note is present, add a newline at the end of it
-	if appl.Note != "" {
-		appl.Note_tex = appl.Note + " \\newline"
-		appl.Note_email = "<div><p style=\"text-align:left\";>" + appl.Note + "</p></div>"
+	if appl.Note1 != "" {
+		appl.Note1_tex = appl.Note1 + " \\newline"
+		appl.Note1_email = "<div><p style=\"text-align:left\";>" + appl.Note1 + "</p></div>"
 	}
+
+  // If additional note is present, add a newline at the end of it
+  if appl.Note2 != "" {
+    appl.Note2_tex = appl.Note2 + " \\newline"
+    appl.Note2_email = "<div><p style=\"text-align:left\";>" + appl.Note2 + "</p></div>"
+  }
 
 	// If additional skill is present, add a \item before it
 	if appl.Skill1 != "" {
@@ -119,31 +134,40 @@ func PharseFlags(appl *App) error {
 		appl.Skill2_text = "- " + appl.Skill2
 	}
 
+  // If additional skill is present, add a \item before it
+  if appl.Skill3 != "" {
+    appl.Skill3_tex = "\\item " + appl.Skill3
+    appl.Skill3_email = "<li>" + appl.Skill3 + "</li>"
+    appl.Skill3_text = "- " + appl.Skill3
+  }
+
+  fmt.Println(appl.Local)
+
 	if appl.Local == true {
 		appl.ReloLine = LOCAL
-	} else if appl.Local == false {
+  }
+	if appl.Local == false {
 		appl.ReloLine = DISTANT
-	} else {
-		panic("Local undefined")
-	}
+  }
+
 	appl.ReloLine_email = "<div><p style=\"text-align:left;\">" + appl.ReloLine + "</p></div>"
 
 
 	if appl.Option <= 6 && appl.Option > 0 {
 		appl.KvMap_tex = map[string]string{"[COMPANY_NAME]": strings.Replace(appl.Company, "&", "\\&", -1), "[COMPANY_CONTACT]": strings.Replace(appl.Contact, "&", "\\&", -1),
 			"[POSITION_NAME]": strings.Replace(appl.Position, "&", "\\&", -1), "[HEADING]": strings.Replace(appl.Heading, "&", "\\&", -1), "[POSITION_SOURCE]": strings.Replace(appl.Source, "&", "\\&", -1),
-			"[ADDITIONAL_SKILL_1]": strings.Replace(appl.Skill1_tex, "&", "\\&", -1), "[ADDITIONAL_SKILL_2]": strings.Replace(appl.Skill2_tex, "&", "\\&", -1),
-			"[ADDITIONAL_NOTE]": strings.Replace(appl.Note_tex, "&", "\\&", -1), "[RELOCATION]": strings.Replace(appl.ReloLine, "&", "\\&", -1)}
+			"[ADDITIONAL_SKILL_1]": strings.Replace(appl.Skill1_tex, "&", "\\&", -1), "[ADDITIONAL_SKILL_2]": strings.Replace(appl.Skill2_tex, "&", "\\&", -1), "[ADDITIONAL_SKILL_3]": strings.Replace(appl.Skill3_tex, "&", "\\&", -1),
+			"[ADDITIONAL_NOTE1]": strings.Replace(appl.Note1_tex, "&", "\\&", -1),	"[ADDITIONAL_NOTE2]": strings.Replace(appl.Note2_tex, "&", "\\&", -1), "[RELOCATION]": strings.Replace(appl.ReloLine, "&", "\\&", -1)}
 
 		appl.KvMap_text = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
-			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_text, "[ADDITIONAL_SKILL_2]": appl.Skill2_text,
-			"[ADDITIONAL_NOTE]": appl.Note, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine}
+			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_text, "[ADDITIONAL_SKILL_2]": appl.Skill2_text,  "[ADDITIONAL_SKILL_3]": appl.Skill3_text,
+			"[ADDITIONAL_NOTE1]": appl.Note1, "[ADDITIONAL_NOTE2]": appl.Note2, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine}
 	}
 
 	if appl.MailTo != "" && appl.EmailPass != ""  && appl.MailFrom != "" {
 		appl.KvMap_email = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
-			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_email, "[ADDITIONAL_SKILL_2]": appl.Skill2_email,
-			"[ADDITIONAL_NOTE]": appl.Note_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email}
+			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_email, "[ADDITIONAL_SKILL_2]": appl.Skill2_email, "[ADDITIONAL_SKILL_3]": appl.Skill3_email,
+			"[ADDITIONAL_NOTE1]": appl.Note1_email, "[ADDITIONAL_NOTE2]": appl.Note2_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email}
 
 
 		if appl.Subject == "" && appl.Position != "" {

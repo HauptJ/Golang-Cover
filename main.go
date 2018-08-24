@@ -25,14 +25,17 @@ func main() {
 	mailFromPtr := flag.String("from", "", "[OPTIONAL] mail from address")
 	emailPassPtr := flag.String("pass", "", "[REQUIRED w/ --email] email account password")
 	headingPtr := flag.String("head", "", "[OPTIONAL] custom heading message")
+	headingAddPtr := flag.String("headAdd", "", "[OPTIONAL] custom heading message")
 	companyPtr := flag.String("company", "", "[REQUIRED] company name")
 	contactPtr := flag.String("contact", "", "[OPTIONAL] contact name")
 	positionPtr := flag.String("position", "", "[REQUIRED w/o --head] position name")
 	sourcePtr := flag.String("source", "", "[REQUIRED w/o --head] position source")
-	notePtr := flag.String("note", "", "[OPTIONAL] additional note")
-	localPtr := flag.Bool("local", true, "[OPTIONAL] is the position local")
+	notePtr1 := flag.String("note1", "", "[OPTIONAL] additional note1")
+	notePtr2 := flag.String("note2", "", "[OPTIONAL] additional note2")
+	localPtr := flag.Bool("local", false, "[OPTIONAL] is the position local")
 	skillPtr1 := flag.String("skill1", "", "[OPTIONAL] additional skill 1")
 	skillPtr2 := flag.String("skill2", "", "[OPTIONAL] additional skill 2")
+	skillPtr3 := flag.String("skill3", "", "[OPTIONAL] additional skill 3")
 	urlPtr := flag.String("url", "", "[OPTIONAL] URL to postion AD")
 	testPtr := flag.Bool("test", false, "[OPTIONAL] test build not to be logged")
 	// Google Cloud Storage Specific
@@ -48,8 +51,8 @@ func main() {
 	}
 
 	appl := app.App{Option: *optionPtr, Local: *localPtr, Test: *testPtr, MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
-		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note: *notePtr, Skill1: *skillPtr1,
-		Skill2: *skillPtr2, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr, GCUploadFile: *gcUploadPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr}
+		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note1: *notePtr1, Note2: *notePtr2, Skill1: *skillPtr1,
+		Skill2: *skillPtr2, Skill3: *skillPtr3, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr, HeadingAdd: *headingAddPtr, GCUploadFile: *gcUploadPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr}
 
 	err := app.PharseFlags(&appl)
 	if err != nil {

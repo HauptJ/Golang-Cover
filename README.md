@@ -25,11 +25,12 @@ See the tutorial I wrote:
 #### Flags:
 - `--opt`: **[required]** option, see list below
 - `--company`: **[required]** company name
-- `--note`: **[optional]** note to add at bottom
-- `--skill1`, `--skill2`: **[optional]** additional skills to list in cover
+- `--note1`, `--note2`: **[optional]** notes to add at bottom
+- `--skill1`, `--skill2`, `--skill3`: **[optional]** additional skills to list in cover
 - `--contact`: **[optional]** contact name
 - `--position`: **[REQUIRED w/o --head]** name of the position
 - `--head`: **[optional]** override default heading w/ custom one
+- `--headAdd`: **[optional]** Extend the default header
 - `--source`: **[REQUIRED w/o --head]** source of advertisement of the position, eg. LinkedIn
 - `--to`: **[optional]** mail to address
 - `--pass`: **[REQUIRED w/ --email]** email account password
@@ -49,6 +50,6 @@ See the tutorial I wrote:
 - `6`.) Cover and Resume as seperate files
 - `7`.) CV w/ ref
 - `8`.) CV w/0 ref
-- `default`: Just the resume
+- `9`.) Just the resume
 
 **Example: ** ```.\main.exe --company "Some Company" --opt 1 --note "I am a developer who loves to code." --source "your company's website" --position "Software Engineer" --contact "Some Person"```

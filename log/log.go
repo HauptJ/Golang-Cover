@@ -37,8 +37,8 @@ func Log_app(appl *app.App) error {
 	logString := date.Get_date("log") + "," + strconv.Itoa(appl.Option) + "," + strings.Replace(appl.Company, ",", "_", -1) + "," +
 		strings.Replace(appl.Position, ",", "_", -1) + "," + strings.Replace(appl.Contact, ",", "_", -1) + "," +
 		strings.Replace(appl.Source, ",", "_", -1) + "," + strings.Replace(appl.Heading, ",", "_", -1) + "," +
-		strings.Replace(appl.Note, ",", "_", -1) + "," + strings.Replace(appl.Skill1, ",", "_", -1) + "," +
-		strings.Replace(appl.Skill2, ",", "_", -1) + "," + strconv.FormatBool(appl.Local) + "," + appl.Url + "," + appl.MailTo + "\n"
+		strings.Replace(appl.Note1, ",", "_", -1) + "," + strings.Replace(appl.Note2, ",", "_", -1) + "," + strings.Replace(appl.Skill1, ",", "_", -1) + "," +
+		strings.Replace(appl.Skill2, ",", "_", -1) + "," + strings.Replace(appl.Skill3, ",", "_", -1) + "," + strconv.FormatBool(appl.Local) + "," + appl.Url + "," + appl.MailTo + "\n"
 
 	_, err = log.Write([]byte(logString))
 	if err != nil {
