@@ -37,7 +37,7 @@ See the tutorial I wrote:
 - `--subject`: **[optional]** override default Email subject w/ custom one
 - `--url`: **[optional]** URL to position ad
 - `--test`: **[optional]** run test build which will not to be logged
-- `--upload`: **[optional]** upload file to Google Cloud storage bucket **NOTE** only applies to opt `7`
+- `--upload`: **[optional]** upload file to Google Cloud storage bucket **NOTE** only applies to opt `7` and `8`
 - `--bucket`: **[REQUIRED w/ --upload]** the bucket to upload content to
 - `--project`: **[REQUIRED w/ --upload]** the ID of the GCP project to use
 

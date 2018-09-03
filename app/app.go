@@ -36,6 +36,7 @@ const DEFAULT_CONTACT = "To whom it may concern"
 const CONTACT_ENDING = " or to whom it may concern"
 const LOCAL = "I am currently located in the St. Louis area, and I am also receptive to relocation."
 const DISTANT = "I am currently located in the St. Louis area, however, I am receptive to relocation."
+const GCLOUD_FILENAME = "cv.pdf"
 
 
 // TODO: Enscapsulateion?
@@ -366,7 +367,7 @@ func rename_files(appl *App) error {
     }
     appl.Attachments = append(appl.Attachments, newName_CV)
     if appl.GCUploadFile == true {
-      err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, newName_CV, true) // upload to Google Cloud Storage
+      err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, GCLOUD_FILENAME, true) // upload to Google Cloud Storage
       if err != nil {
         panic(err)
       }
@@ -379,6 +380,12 @@ func rename_files(appl *App) error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_CV)
+    if appl.GCUploadFile == true {
+      err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, GCLOUD_FILENAME, true) // upload to Google Cloud Storage
+      if err != nil {
+        panic(err)
+      }
+    }
   default: // just the resume
     // RESUME
     newName_resume := RESUME_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
