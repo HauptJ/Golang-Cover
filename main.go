@@ -7,6 +7,7 @@ Last Modified: 08-15-2018
 package main
 
 import (
+	"./api"
 	"./app"
 	"./date"
 	"./email"
@@ -76,9 +77,13 @@ func main() {
 
 	}
 
-	//finally log application to file
+	// finally log application to external database and to local CSV file
 	if appl.Test == false {
 		err = log.Log_app(&appl)
+		if err != nil {
+			panic(err)
+		}
+		err = api.SendApp(&appl)
 		if err != nil {
 			panic(err)
 		}
