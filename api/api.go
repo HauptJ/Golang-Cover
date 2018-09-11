@@ -11,7 +11,7 @@ import (
 /*
   Constant Declarations
 */
-const API_ENDPOINT = "http://localhost:8080/apps"
+const API_ENDPOINT = "https://httpbin.org/post"
 
 func SendApp(appl *app.App) error {
 
