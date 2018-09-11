@@ -1,0 +1,37 @@
+
+
+%-----       letter       ---------------------------------------------------------
+% recipient data
+\recipient{test 6c}{}
+\date{\today}
+\opening{test contact or to whom it may concern,}
+\closing{Yours truly,}
+\enclosure[Attached]{Resume and CV}          % use an optional argument to use a string other than "Enclosure", or redefine \enclname
+\makelettertitle
+
+\setlength{\parindent}{0pt}
+\newcommand{\forceindent}{\leavevmode{\parindent=0.6cm\indent}}
+
+I am excited about the possibility of joining your organization in the position of --test position, as advertised on test source.  \newline
+
+\textbf{My skills include:}
+\begin{itemize}
+  \item test skill1
+  \item test skill2
+  \item test skill3
+  \item The ability to learn new technologies quickly
+  \item Experience with programming languages such as Go, Python, C++, and Java
+\end{itemize}
+
+test note1 \newline
+
+test note2 \newline
+
+I am currently located in the St. Louis area, and I am also receptive to relocation.
+
+If you have any questions, feel free to contact me.
+
+Email: \emaillink{someone@something.com} \newline
+Cell: 314-111-1111
+
+\makeletterclosing
