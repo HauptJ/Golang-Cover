@@ -9,9 +9,15 @@ before_install:
   - go get gopkg.in/gomail.v2
   - go get cloud.google.com/go/storage
   - go get golang.org/x/net/context
+  - git clone --recurse-submodules https://github.com/HauptJ/Golang-API-Docker.git
+
+services:
+  - docker
 
 
 script:
+  # Build Local API
+  - pushd ./Golang-API-Docker.git && docker-compose up && popd
   - go build main.go
   # 1.) Cover, Resume, and CV all in one file
   - ./main --opt 1 --company "test 1a" --source "test source" --position --"test position"

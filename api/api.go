@@ -2,7 +2,7 @@ package api
 
 import (
   "encoding/json"
-  //"fmt"
+  "fmt"
   "net/http"
   "bytes"
   "../app"
@@ -11,7 +11,8 @@ import (
 /*
   Constant Declarations
 */
-const API_ENDPOINT = "https://httpbin.org/post"
+const API_ENDPOINT = "http://localhost:8080/newapp"
+const AUTH_API_ENDPOINT = "http://localhost:8080/auth"
 
 func SendApp(appl *app.App) error {
 
@@ -32,16 +33,49 @@ func SendApp(appl *app.App) error {
     "MailTo": appl.MailTo,
   }
 
+  auth := map[string]interface{}{
+    "Username": "admin",
+    "Password": "password",
+  }
+
+  jsonAuth, err := json.Marshal(auth)
+  if  err != nil {
+    panic(err)
+  }
+
+  authResp, err := http.Post(AUTH_API_ENDPOINT, "application/json", bytes.NewBuffer(jsonAuth))
+  if err != nil {
+    panic(err)
+  }
+
+  var authResult map[string]interface{}
+
+  json.NewDecoder(authResp.Body).Decode(&authResult)
+  authToken := authResult["token"]
+
+  fmt.Println("authResult")
+  fmt.Println(authResult)
+  fmt.Println("authToken")
+  fmt.Println(authToken)
+
+  var bearer = "Bearer " + authToken.(string)
+
   // convert appl to json string
   jsonApplSan, err := json.Marshal(applSan)
   if err != nil {
     panic(err)
   }
-  // fmt.Println("JsonData")
-  // fmt.Println(jsonApplSan)
 
-  // send appl to
-  resp, err := http.Post(API_ENDPOINT, "application/json", bytes.NewBuffer(jsonApplSan))
+  req, err := http.NewRequest(http.MethodPost, API_ENDPOINT, bytes.NewBuffer(jsonApplSan))
+  if err != nil {
+    panic(err)
+  }
+
+  req.Header.Add("Authorization", bearer)
+  fmt.Println("Request")
+  fmt.Println(req)
+
+  resp, err := http.DefaultClient.Do(req)
   if err != nil {
     panic(err)
   }
@@ -50,8 +84,8 @@ func SendApp(appl *app.App) error {
 
   json.NewDecoder(resp.Body).Decode(&result)
 
-  // fmt.Println(result)
-  // fmt.Println(result["data"])
+  fmt.Println("result")
+  fmt.Println(result)
 
   return nil
 }
