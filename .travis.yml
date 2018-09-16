@@ -9,7 +9,7 @@ before_install:
   - go get gopkg.in/gomail.v2
   - go get cloud.google.com/go/storage
   - go get golang.org/x/net/context
-  - git clone --recurse-submodules https://github.com/HauptJ/Golang-API-Docker.git
+  - git clone --recurse-submodules https://github.com/HauptJ/Golang-API-Docker.git && pushd Golang-API-Docker.git/API/ && git checkout dev && popd
 
 services:
   - docker
