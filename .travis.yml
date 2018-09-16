@@ -21,6 +21,7 @@ script:
   - git checkout dev
   - docker-compose up &
   - popd
+  - sleep 300
   - go build main.go
   # 1.) Cover, Resume, and CV all in one file
   - ./main --opt 1 --company "test 1a" --source "test source" --position --"test position"
