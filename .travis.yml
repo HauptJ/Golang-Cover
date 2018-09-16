@@ -17,7 +17,7 @@ services:
 
 script:
   # Build Local API
-  - pushd ./Golang-API-Docker && docker-compose up && popd
+  - pushd ./Golang-API-Docker && git checkout dev && docker-compose up && popd
   - go build main.go
   # 1.) Cover, Resume, and CV all in one file
   - ./main --opt 1 --company "test 1a" --source "test source" --position --"test position"
