@@ -257,8 +257,10 @@ func Build_pdf(appl *App) error {
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_CV_ref\".tex"}
   case appl.Option == 8: // CV w/0 ref
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_CV\".tex"}
-  default: // just the resume
+  case appl.Option == 9: // just the resume
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_resume\".tex"}
+  default: // the follow up
+
   }
 
   if len(cmdArgs) > 0 {
