@@ -1,7 +1,7 @@
 /*
 DESC: Writes to log file
 Author: Joshua Haupt
-Last Modified: 08-22-2018
+Last Modified: 09-22-2018
 */
 
 
@@ -19,7 +19,8 @@ import (
 /*
  Constant Declarations
 */
-const LOG_FILE = "app_log.csv"
+const APP_LOG_FILE = "app_log.csv"
+const FOLLOW_UP_LOG_FILE = "follow_up.csv"
 
 
 /*
@@ -29,16 +30,34 @@ OUT: nill on success
 */
 func Log_app(appl *app.App) error {
 
-	log, err := os.OpenFile(LOG_FILE, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	var logFile string
+	var logString string
+
+	if appl.Option != 10 {
+		logFile = APP_LOG_FILE
+
+		logString = date.Get_date("log") + "," + strconv.Itoa(appl.Option) + "," + strings.Replace(appl.Company, ",", "_", -1) + "," +
+			strings.Replace(appl.Position, ",", "_", -1) + "," + strings.Replace(appl.PositionID, ",", "_", -1) + "," + strings.Replace(appl.Contact, ",", "_", -1) + "," +
+			strings.Replace(appl.Source, ",", "_", -1) + "," + strings.Replace(appl.Heading, ",", "_", -1) + "," +
+			strings.Replace(appl.Note1, ",", "_", -1) + "," + strings.Replace(appl.Note2, ",", "_", -1) + "," + strings.Replace(appl.Skill1, ",", "_", -1) + "," +
+			strings.Replace(appl.Skill2, ",", "_", -1) + "," + strings.Replace(appl.Skill3, ",", "_", -1) + "," + strconv.FormatBool(appl.Local) + "," + appl.Url + "," + appl.MailTo + "\n"
+	} else if appl.Option == 10 {
+		logFile = FOLLOW_UP_LOG_FILE
+
+		logString = date.Get_date("log") + "," + strconv.Itoa(appl.Option) + "," + strings.Replace(appl.Company, ",", "_", -1) + "," +
+			strings.Replace(appl.Position, ",", "_", -1) + "," + strings.Replace(appl.PositionID, ",", "_", -1) + "," + strings.Replace(appl.Contact, ",", "_", -1) + "," +
+			strings.Replace(appl.WhenApplied, ",", "_", -1) + "," + strings.Replace(appl.Heading, ",", "_", -1) + "," +
+			strings.Replace(appl.Note1, ",", "_", -1)  + "," + appl.MailTo + "\n"
+	} else {
+		panic("Failed to write log")
+	}
+
+	log, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		panic(err)
 	}
 
-	logString := date.Get_date("log") + "," + strconv.Itoa(appl.Option) + "," + strings.Replace(appl.Company, ",", "_", -1) + "," +
-		strings.Replace(appl.Position, ",", "_", -1) + "," + strings.Replace(appl.Contact, ",", "_", -1) + "," +
-		strings.Replace(appl.Source, ",", "_", -1) + "," + strings.Replace(appl.Heading, ",", "_", -1) + "," +
-		strings.Replace(appl.Note1, ",", "_", -1) + "," + strings.Replace(appl.Note2, ",", "_", -1) + "," + strings.Replace(appl.Skill1, ",", "_", -1) + "," +
-		strings.Replace(appl.Skill2, ",", "_", -1) + "," + strings.Replace(appl.Skill3, ",", "_", -1) + "," + strconv.FormatBool(appl.Local) + "," + appl.Url + "," + appl.MailTo + "\n"
+
 
 	_, err = log.Write([]byte(logString))
 	if err != nil {

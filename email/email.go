@@ -1,7 +1,7 @@
 /*
 DESC: Writes to log file
 Author: Joshua Haupt
-Last Modified: 08-21-2018
+Last Modified: 0-22-2018
 */
 
 
@@ -21,6 +21,7 @@ import (
 const EMAIL_SMTP = "smtp.gmail.com"
 const EMAIL_COVER_TEMPL = "email_cover_template.html"
 const EMAIL_TEMPL = "email_template.html"
+const EMAIL_FOLLOW_UP_TEMPL = "email_follow_up_template.html"
 
 
 /*
@@ -36,6 +37,13 @@ func Send_email(appl *app.App) error {
 	if appl.Option <= 6 && appl.Option > 0 {
 
 		body, err = app.Replace_strings(EMAIL_COVER_TEMPL, appl.KvMap_email)
+		if err != nil {
+			panic(err)
+		}
+
+	} else if appl.Option == 10 {
+
+		body, err = app.Replace_strings(EMAIL_FOLLOW_UP_TEMPL, appl.KvMap_email)
 		if err != nil {
 			panic(err)
 		}
