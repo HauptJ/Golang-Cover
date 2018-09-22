@@ -39,52 +39,79 @@ const DISTANT = "I am currently located in the St. Louis area, however, I am rec
 const GCLOUD_FILENAME = "cv.pdf"
 
 
-// TODO: Enscapsulateion?
-type App struct {
-  Option int
-	MailTo string
-  MailFrom string
-	Subject string
-	EmailPass string
-	Heading string
+type TexCover struct {
+  	Note1_tex string
+    Note2_tex string
+    Skill1_tex string
+    Skill2_tex string
+    Skill3_tex string
+    KvMap_tex map[string]string
+}
+
+type TextCover struct {
+  	Note1_text string
+    Note2_text string
+    Skill1_text string
+    Skill2_text string
+    Skill3_text string
+    KvMap_text map[string]string
+}
+
+type EmailCover struct {
+  	Note1_email string
+    Note2_email string
+    ReloLine_email string
+    Skill1_email string
+    Skill2_email string
+    Skill3_email string
+    KvMap_email map[string]string
+}
+
+type Email struct {
+    MailTo string
+    MailFrom string
+    Subject string
+    EmailPass string
+}
+
+type GCS struct {
+    GCUploadFile bool
+    GCBucket string
+    GCProjectID string
+}
+
+type Common struct {
+  Heading string
   HeadingAdd string
 	Company string
 	Contact string
 	Position string
 	Source string
 	Note1 string
-	Note1_tex string
-	Note1_email string
-	Note1_text string
   Note2 string
-  Note2_tex string
-  Note2_email string
-  Note2_text string
 	Local bool
 	ReloLine string
-	ReloLine_email string
 	Skill1 string
-	Skill1_tex string
-	Skill1_email string
-	Skill1_text string
 	Skill2 string
-	Skill2_tex string
-	Skill2_email string
-	Skill2_text string
   Skill3 string
-  Skill3_tex string
-  Skill3_email string
-  Skill3_text string
 	Url string
-	Test bool
-	KvMap_tex map[string]string
-	KvMap_email map[string]string
-	KvMap_text map[string]string
-	Attachments []string
-  // Google Cloud Storage
-  GCUploadFile bool
-  GCBucket string
-  GCProjectID string
+  Attachments []string
+}
+
+type Control struct {
+  Option int
+  Test bool
+}
+
+
+type App struct {
+  TexCover
+  TextCover
+  EmailCover
+  Email
+  GCS   // Google Cloud Storage
+  Common
+  Control
 }
 
 

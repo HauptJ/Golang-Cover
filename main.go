@@ -51,9 +51,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	appl := app.App{Option: *optionPtr, Local: *localPtr, Test: *testPtr, MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Company: *companyPtr,
-		Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note1: *notePtr1, Note2: *notePtr2, Skill1: *skillPtr1,
-		Skill2: *skillPtr2, Skill3: *skillPtr3, Url: *urlPtr, Subject: *subjectPtr, Heading: *headingPtr, HeadingAdd: *headingAddPtr, GCUploadFile: *gcUploadPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr}
+	appl := app.App{
+		app.TexCover{},
+		app.TextCover{},
+		app.EmailCover{},
+		app.Email{MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Subject: *subjectPtr},
+		app.GCS{GCUploadFile: *gcUploadPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr},
+		app.Common{Local: *localPtr, Company: *companyPtr,
+			Position: *positionPtr, Source: *sourcePtr, Contact: *contactPtr, Note1: *notePtr1, Note2: *notePtr2, Skill1: *skillPtr1,
+			Skill2: *skillPtr2, Skill3: *skillPtr3, Url: *urlPtr, Heading: *headingPtr, HeadingAdd: *headingAddPtr},
+		app.Control{Option: *optionPtr, Test: *testPtr}}
 
 	err := app.PharseFlags(&appl)
 	if err != nil {
