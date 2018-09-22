@@ -1,7 +1,7 @@
 /*
 DESC: Driver - takes in CLI flags
 Author: Joshua Haupt
-Last Modified: 08-15-2018
+Last Modified: 09-22-2018
 */
 
 package main
@@ -95,10 +95,13 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		err = api.SendApp(&appl)
-		if err != nil {
-			panic(err)
+		if appl.Option != 10 {
+			err = api.SendApp(&appl)
+			if err != nil {
+				panic(err)
+			}
 		}
+		// TODO: follow up API call
 	} else if appl.Test == true {
 		fmt.Println("Application not logged")
 	} else {

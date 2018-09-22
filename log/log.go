@@ -46,7 +46,7 @@ func Log_app(appl *app.App) error {
 
 		logString = date.Get_date("log") + "," + strconv.Itoa(appl.Option) + "," + strings.Replace(appl.Company, ",", "_", -1) + "," +
 			strings.Replace(appl.Position, ",", "_", -1) + "," + strings.Replace(appl.PositionID, ",", "_", -1) + "," + strings.Replace(appl.Contact, ",", "_", -1) + "," +
-			strings.Replace(appl.WhenApplied, ",", "_", -1) + "," + strings.Replace(appl.Heading, ",", "_", -1) + "," +
+			strings.Replace(appl.WhenApplied, ",", "_", -1) + "," +
 			strings.Replace(appl.Note1, ",", "_", -1)  + "," + appl.MailTo + "\n"
 	} else {
 		panic("Failed to write log")

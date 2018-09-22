@@ -1,0 +1,13 @@
+[COMPANY_CONTACT],
+
+[WHEN_APPLIED], I submitted an application for an engineering position at [COMPANY_NAME]. I would just like to confirm the receipt of my application and reiterate my interest in the position.
+
+[FOLLOWUPREF]
+[FOLLOWUPREFINFO]
+
+I am very interested in working with [COMPANY_NAME], and I believe my technical and leadership skills would be an ideal match for this position.
+
+I attached a copy of my CV which includes a detailed list of all my projects, as well as links to them on GitHub. If you have any questions, or need any further materials from me, please let me know.
+
+Thank You,
+Example

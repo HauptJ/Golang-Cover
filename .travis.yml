@@ -51,5 +51,8 @@ script:
   - ./main --opt 7 --company "test inc 7"
   # 8.) CV w/o ref
   - ./main --opt 8 --company "test inc 8"
-  # 9+) Resume only
+  # 9) Resume only
   - ./main --opt 9 --company "test inc 9"
+  # 10+) Follow Up
+  - ./main --opt 10 --company "test 10a" --position "test position" --positionID "test position id"
+  - ./main --opt 10 --company "test 10b" --position "test position"
