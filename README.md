@@ -1,5 +1,5 @@
 # Golang-Cover
-Golang cover letter generator
+Golang application tracker, cover letter and follow up generator, and whatever else I can think of adding.
 
 This repository contains a mirror of the Golang source files used in a private repository that I use for my resume and CV.
 
@@ -29,6 +29,8 @@ See the tutorial I wrote:
 - `--skill1`, `--skill2`, `--skill3`: **[optional]** additional skills to list in cover
 - `--contact`: **[optional]** contact name
 - `--position`: **[REQUIRED w/o --head]** name of the position
+- `--positionID`: **[optional]** position ID
+- `--applied`: **[optional]** when application was submitted
 - `--head`: **[optional]** override default heading w/ custom one
 - `--headAdd`: **[optional]** Extend the default header
 - `--source`: **[REQUIRED w/o --head]** source of advertisement of the position, eg. LinkedIn
@@ -43,13 +45,15 @@ See the tutorial I wrote:
 
 #### Options:
 - `1`.) Everything w/ ref included as one file
-- `2`.) Everything w/ ref as seperate files
+- `2`.) Everything w/ ref as separate files
 - `3`.) Cover and CV w/ ref included as one file
-- `4`.) Cover and CV w/ ref as seperate files
+- `4`.) Cover and CV w/ ref as separate files
 - `5`.) Cover and Resume included as one file
-- `6`.) Cover and Resume as seperate files
+- `6`.) Cover and Resume as separate files
 - `7`.) CV w/ ref
 - `8`.) CV w/0 ref
 - `9`.) Just the resume
+- `10`.) Follow Up message
+
 
 **Example: ** ```.\main.exe --company "Some Company" --opt 1 --note "I am a developer who loves to code." --source "your company's website" --position "Software Engineer" --contact "Some Person"```
