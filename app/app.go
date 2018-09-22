@@ -1,7 +1,7 @@
 /*
-DESC: Generates Resume and Cover Letter
+DESC: Generates Resume, Cover Letter and Follow Up
 Author: Joshua Haupt
-Last Modified: 08-22-2018
+Last Modified: 09-22-2018
 */
 
 
@@ -21,12 +21,9 @@ import (
 /*
  Constant Declarations
 */
-const EMAIL = "josh@hauptj.com"
-const EMAIL_SMTP = "smtp.gmail.com"
 const TEX_COVER_TEMPL = "cover_template.tex"
-const EMAIL_COVER_TEMPL = "email_cover_template.html"
 const TEXT_COVER_TEMPL = "text_cover_template.txt"
-const EMAIL_TEMPL = "email_template.html"
+const TEXT_FOLLOW_UP_TEMPL = "text_follow_up_template.txt"
 const TEX_CMD = "pdflatex"
 const ALL_FILENAME_BEGIN = "Joshua_Haupt_Cover_Resume_CV_"
 const RESUME_FILENAME_BEGIN = "Joshua_Haupt_Resume_"
@@ -39,52 +36,87 @@ const DISTANT = "I am currently located in the St. Louis area, however, I am rec
 const GCLOUD_FILENAME = "cv.pdf"
 
 
-// TODO: Enscapsulateion?
-type App struct {
-  Option int
-	MailTo string
-  MailFrom string
-	Subject string
-	EmailPass string
-	Heading string
+type TexCover struct {
+  	Note1_tex string
+    Note2_tex string
+    Skill1_tex string
+    Skill2_tex string
+    Skill3_tex string
+    KvMap_tex map[string]string
+}
+
+type TextCover struct {
+  	Note1_text string
+    Note2_text string
+    Skill1_text string
+    Skill2_text string
+    Skill3_text string
+    KvMap_text map[string]string
+}
+
+type EmailCover struct {
+  	Note1_email string
+    Note2_email string
+    ReloLine_email string
+    Skill1_email string
+    Skill2_email string
+    Skill3_email string
+    KvMap_email map[string]string
+}
+
+type Email struct {
+    MailTo string
+    MailFrom string
+    Subject string
+    EmailPass string
+}
+
+type GCS struct {
+    GCUploadFile bool
+    GCBucket string
+    GCProjectID string
+}
+
+type FollowUp struct {
+    WhenApplied string
+    FollowUpRef string
+    FollowUpRefInfo string
+}
+
+type Common struct {
+  Heading string
   HeadingAdd string
 	Company string
 	Contact string
 	Position string
+  PositionID string
 	Source string
 	Note1 string
-	Note1_tex string
-	Note1_email string
-	Note1_text string
   Note2 string
-  Note2_tex string
-  Note2_email string
-  Note2_text string
 	Local bool
 	ReloLine string
-	ReloLine_email string
 	Skill1 string
-	Skill1_tex string
-	Skill1_email string
-	Skill1_text string
 	Skill2 string
-	Skill2_tex string
-	Skill2_email string
-	Skill2_text string
   Skill3 string
-  Skill3_tex string
-  Skill3_email string
-  Skill3_text string
 	Url string
-	Test bool
-	KvMap_tex map[string]string
-	KvMap_email map[string]string
-	KvMap_text map[string]string
-	Attachments []string
-  // Google Cloud Storage
-  GCUploadFile bool
-  GCBucket string
-  GCProjectID string
+  Attachments []string
+}
+
+type Control struct {
+  Option int
+  Test bool
+}
+
+
+type App struct {
+  TexCover
+  TextCover
+  EmailCover
+  Email
+  GCS   // Google Cloud Storage
+  FollowUp
+  Common
+  Control
 }
 
 
@@ -108,6 +140,20 @@ func PharseFlags(appl *App) error {
 			panic("heading undefined")
 		}
 	}
+
+  if appl.Option == 10 && appl.Position != "" && appl.PositionID != "" {
+    appl.FollowUpRef = "For reference, I have pasted the position title and ID number below."
+    appl.FollowUpRefInfo = appl.Position + " - " + appl.PositionID
+  }
+
+  if appl.Option == 10 && appl.Position != "" && appl.PositionID == "" {
+    appl.FollowUpRef = "For reference, I have pasted the position title below."
+    appl.FollowUpRefInfo = appl.Position
+  }
+
+  if appl.Option == 10 && (appl.Position == "" || appl.Company == "") {
+    panic("Not all of the required flags for a follow up were provided. Need: --position and --company")
+  }
 
 	// If additional note is present, add a newline at the end of it
 	if appl.Note1 != "" {
@@ -154,7 +200,7 @@ func PharseFlags(appl *App) error {
 	appl.ReloLine_email = "<div><p style=\"text-align:left;\">" + appl.ReloLine + "</p></div>"
 
 
-	if appl.Option <= 6 && appl.Option > 0 {
+	if (appl.Option <= 6 && appl.Option > 0) || appl.Option == 10 {
 		appl.KvMap_tex = map[string]string{"[COMPANY_NAME]": strings.Replace(appl.Company, "&", "\\&", -1), "[COMPANY_CONTACT]": strings.Replace(appl.Contact, "&", "\\&", -1),
 			"[POSITION_NAME]": strings.Replace(appl.Position, "&", "\\&", -1), "[HEADING]": strings.Replace(appl.Heading, "&", "\\&", -1), "[POSITION_SOURCE]": strings.Replace(appl.Source, "&", "\\&", -1),
 			"[ADDITIONAL_SKILL_1]": strings.Replace(appl.Skill1_tex, "&", "\\&", -1), "[ADDITIONAL_SKILL_2]": strings.Replace(appl.Skill2_tex, "&", "\\&", -1), "[ADDITIONAL_SKILL_3]": strings.Replace(appl.Skill3_tex, "&", "\\&", -1),
@@ -162,13 +208,13 @@ func PharseFlags(appl *App) error {
 
 		appl.KvMap_text = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
 			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_text, "[ADDITIONAL_SKILL_2]": appl.Skill2_text,  "[ADDITIONAL_SKILL_3]": appl.Skill3_text,
-			"[ADDITIONAL_NOTE1]": appl.Note1, "[ADDITIONAL_NOTE2]": appl.Note2, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine}
+			"[ADDITIONAL_NOTE1]": appl.Note1, "[ADDITIONAL_NOTE2]": appl.Note2, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine, "[WHEN_APPLIED]": appl.WhenApplied, "[FOLLOWUPREF]": appl.FollowUpRef, "[FOLLOWUPREFINFO]": appl.FollowUpRefInfo}
 	}
 
 	if appl.MailTo != "" && appl.EmailPass != ""  && appl.MailFrom != "" {
 		appl.KvMap_email = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
 			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_email, "[ADDITIONAL_SKILL_2]": appl.Skill2_email, "[ADDITIONAL_SKILL_3]": appl.Skill3_email,
-			"[ADDITIONAL_NOTE1]": appl.Note1_email, "[ADDITIONAL_NOTE2]": appl.Note2_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email}
+			"[ADDITIONAL_NOTE1]": appl.Note1_email, "[ADDITIONAL_NOTE2]": appl.Note2_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email, "[WHEN_APPLIED]": appl.WhenApplied, "[FOLLOWUPREF]": appl.FollowUpRef, "[FOLLOWUPREFINFO]": appl.FollowUpRefInfo}
 
 
 		if appl.Subject == "" && appl.Position != "" {
@@ -230,8 +276,11 @@ func Build_pdf(appl *App) error {
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_CV_ref\".tex"}
   case appl.Option == 8: // CV w/0 ref
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_CV\".tex"}
-  default: // just the resume
+  case appl.Option == 9: // just the resume
     cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_resume\".tex"}
+  default: // the follow up
+    go appl.text_follow_up()
+    cmdArgs = []string{"-synctex=1", "-interaction=nonstopmode", "\"main_CV_ref\".tex"}
   }
 
   if len(cmdArgs) > 0 {
@@ -386,7 +435,7 @@ func rename_files(appl *App) error {
         panic(err)
       }
     }
-  default: // just the resume
+  case appl.Option == 9: // just the resume
     // RESUME
     newName_resume := RESUME_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
     err = copyfiles.Copy_file("main_resume.pdf", newName_resume)
@@ -394,6 +443,14 @@ func rename_files(appl *App) error {
       panic(err)
     }
     appl.Attachments = append(appl.Attachments, newName_resume)
+  default: // follow up
+    // CV w/ ref
+    newName_CV := CV_FILENAME_BEGIN + companyName + "_" + date.Get_date("fileName") + ".pdf"
+    err = copyfiles.Copy_file("main_CV_ref.pdf", newName_CV)
+    if err != nil {
+      panic(err)
+    }
+    appl.Attachments = append(appl.Attachments, newName_CV)
   }
 
   // print list of generated files
@@ -457,6 +514,25 @@ func (appl App) text_cover() error {
 		panic(err)
 	}
 	err = write_file("cover.txt", contents)
+	if err != nil {
+		panic(err)
+	}
+
+	return nil
+}
+
+
+/*
+DESC: generates copyable plain text version of follow up message
+IN: Application object app
+OUT: nill on success
+*/
+func (appl App) text_follow_up() error {
+	contents, err := Replace_strings(TEXT_FOLLOW_UP_TEMPL, appl.KvMap_text)
+	if err != nil {
+		panic(err)
+	}
+	err = write_file("follow_up.txt", contents)
 	if err != nil {
 		panic(err)
 	}
