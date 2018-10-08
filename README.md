@@ -22,6 +22,29 @@ See the tutorial I wrote:
     3. `go get golang.org/x/net/context`
 7. Build the binary: `go build main.go`
 
+#### ENV Vars:
+- ##### Windows:
+  - **Email:**
+    - `$env:MailFrom="user@example.com"`
+    - `$env:MailPass="password"`
+    - `$env:EmailSMTP="smtp.gmail.com"` Email SMTP server
+  - **GCP Storage:**
+    - `$env:GCProjectID="project-123"`
+    - `$env:GCBucket="bucket.com"`
+
+
+- ##### Linux:
+  - **Email:**
+    - `export MailFrom="user@example.com"` Email account
+    - `export MailPass="password"` Email account password
+    - `export EmailSMTP="smtp.gmail.com"` Email SMTP server
+  - **GCP Storage:**
+    - `export GCProjectID="project-123"` the GCP bucket to upload content to
+    - `export GCBucket="bucket.com"` the ID of the GCP project to use
+
+#### GCP Default Application Auth:
+  `gcloud auth application-default login`
+
 #### Flags:
 - `--opt`: **[required]** option, see list below
 - `--company`: **[required]** company name
@@ -35,13 +58,10 @@ See the tutorial I wrote:
 - `--headAdd`: **[optional]** Extend the default header
 - `--source`: **[REQUIRED w/o --head]** source of advertisement of the position, eg. LinkedIn
 - `--to`: **[optional]** mail to address
-- `--pass`: **[REQUIRED w/ --email]** email account password
 - `--subject`: **[optional]** override default Email subject w/ custom one
 - `--url`: **[optional]** URL to position ad
 - `--test`: **[optional]** run test build which will not to be logged
 - `--upload`: **[optional]** upload file to Google Cloud storage bucket **NOTE** only applies to opt `7` and `8`
-- `--bucket`: **[REQUIRED w/ --upload]** the bucket to upload content to
-- `--project`: **[REQUIRED w/ --upload]** the ID of the GCP project to use
 
 #### Options:
 - `1`.) Everything w/ ref included as one file

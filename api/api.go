@@ -1,3 +1,9 @@
+/*
+DESC: API Interface
+Author: Joshua Haupt
+Last Modified: 10-08-2018
+*/
+
 package api
 
 import (

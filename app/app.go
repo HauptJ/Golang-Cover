@@ -8,6 +8,7 @@ Last Modified: 09-22-2018
 package app
 
 import (
+  "os"
   "io/ioutil"
 	"strings"
   "fmt"
@@ -66,15 +67,15 @@ type EmailCover struct {
 
 type Email struct {
     MailTo string
-    MailFrom string
+    // MailFrom string
     Subject string
-    EmailPass string
+    // EmailPass string
 }
 
 type GCS struct {
     GCUploadFile bool
-    GCBucket string
-    GCProjectID string
+    // GCBucket string
+    // GCProjectID string
 }
 
 type FollowUp struct {
@@ -211,7 +212,7 @@ func PharseFlags(appl *App) error {
 			"[ADDITIONAL_NOTE1]": appl.Note1, "[ADDITIONAL_NOTE2]": appl.Note2, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine, "[WHEN_APPLIED]": appl.WhenApplied, "[FOLLOWUPREF]": appl.FollowUpRef, "[FOLLOWUPREFINFO]": appl.FollowUpRefInfo}
 	}
 
-	if appl.MailTo != "" && appl.EmailPass != ""  && appl.MailFrom != "" {
+	if appl.MailTo != "" && os.Getenv("EmailPass") != ""  && os.Getenv("MailFrom") != "" {
 		appl.KvMap_email = map[string]string{"[COMPANY_NAME]": appl.Company, "[COMPANY_CONTACT]": appl.Contact, "[POSITION_NAME]": appl.Position,
 			"[HEADING]": appl.Heading, "[POSITION_SOURCE]": appl.Source, "[ADDITIONAL_SKILL_1]": appl.Skill1_email, "[ADDITIONAL_SKILL_2]": appl.Skill2_email, "[ADDITIONAL_SKILL_3]": appl.Skill3_email,
 			"[ADDITIONAL_NOTE1]": appl.Note1_email, "[ADDITIONAL_NOTE2]": appl.Note2_email, "[CURRENT_DATE]": date.Get_date("email"), "[RELOCATION]": appl.ReloLine_email, "[WHEN_APPLIED]": appl.WhenApplied, "[FOLLOWUPREF]": appl.FollowUpRef, "[FOLLOWUPREFINFO]": appl.FollowUpRefInfo}
@@ -416,7 +417,7 @@ func rename_files(appl *App) error {
     }
     appl.Attachments = append(appl.Attachments, newName_CV)
     if appl.GCUploadFile == true {
-      err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, GCLOUD_FILENAME, true) // upload to Google Cloud Storage
+      err = gcloud.GCUpload(os.Getenv("GCProjectID"), os.Getenv("GCBucket"), newName_CV, GCLOUD_FILENAME, true) // upload to Google Cloud Storage
       if err != nil {
         panic(err)
       }
@@ -430,7 +431,7 @@ func rename_files(appl *App) error {
     }
     appl.Attachments = append(appl.Attachments, newName_CV)
     if appl.GCUploadFile == true {
-      err = gcloud.GCUpload(appl.GCProjectID, appl.GCBucket, newName_CV, GCLOUD_FILENAME, true) // upload to Google Cloud Storage
+      err = gcloud.GCUpload(os.Getenv("GCProjectID"), os.Getenv("GCBucket"), newName_CV, GCLOUD_FILENAME, true) // upload to Google Cloud Storage
       if err != nil {
         panic(err)
       }
