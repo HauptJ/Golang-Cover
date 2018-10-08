@@ -39,12 +39,12 @@ func main() {
 	// EMAIL
 	mailToPtr := flag.String("to", "", "[REQUIRED w/ --email] mail to address")
 	subjectPtr := flag.String("subject", "", "[OPTIONAL] email subject")
-	mailFromPtr := flag.String("from", "", "[OPTIONAL] mail from address")
-	emailPassPtr := flag.String("pass", "", "[REQUIRED w/ --email] email account password")
+	//mailFromPtr := flag.String("from", "", "[OPTIONAL] mail from address")
+	//emailPassPtr := flag.String("pass", "", "[REQUIRED w/ --email] email account password")
 	// Google Cloud Storage Specific
 	gcUploadPtr := flag.Bool("upload", false, "[OPTIONAL] upload file to bucket")
-	gcBucketPtr := flag.String("bucket", "", "[REQUIRED w/ --upload] the bucket to upload content to")
-	gcProjectIDPtr := flag.String("project", "", "[REQUIRED w/ --upload] the ID of the GCP project to use")
+	//gcBucketPtr := flag.String("bucket", "", "[REQUIRED w/ --upload] the bucket to upload content to")
+	//gcProjectIDPtr := flag.String("project", "", "[REQUIRED w/ --upload] the ID of the GCP project to use")
 	// follow up
 	whenAppliedPtr := flag.String("applied", "Earlier this week", "when application was submitted")
 	flag.Parse()
@@ -59,8 +59,8 @@ func main() {
 		app.TexCover{},
 		app.TextCover{},
 		app.EmailCover{},
-		app.Email{MailTo: *mailToPtr, MailFrom: *mailFromPtr, EmailPass: *emailPassPtr, Subject: *subjectPtr},
-		app.GCS{GCUploadFile: *gcUploadPtr, GCBucket: *gcBucketPtr, GCProjectID: *gcProjectIDPtr},
+		app.Email{MailTo: *mailToPtr, Subject: *subjectPtr},
+		app.GCS{GCUploadFile: *gcUploadPtr},
 		app.FollowUp{WhenApplied: *whenAppliedPtr},
 		app.Common{Local: *localPtr, Company: *companyPtr,
 			Position: *positionPtr, PositionID: *positionIDPtr, Source: *sourcePtr, Contact: *contactPtr, Note1: *notePtr1, Note2: *notePtr2, Skill1: *skillPtr1,
@@ -78,7 +78,7 @@ func main() {
 	}
 
 	// send Email
-	if appl.MailTo != "" && appl.EmailPass != "" && appl.MailFrom != "" {
+	if appl.MailTo != "" && os.Getenv("EmailPass") != "" && os.Getenv("MailFrom") != "" {
 
 		err = email.Send_email(&appl)
 		if err != nil {

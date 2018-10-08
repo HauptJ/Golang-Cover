@@ -56,7 +56,7 @@ func Send_email(appl *app.App) error {
 	}
 
 	m := gomail.NewMessage()
-	m.SetHeader("From", appl.MailFrom)
+	m.SetHeader("From", os.Getenv("MailFrom"))
 	m.SetHeader("To", appl.MailTo)
 	m.SetHeader("Subject", appl.Subject)
 	m.SetBody("text/html", body)
@@ -70,7 +70,7 @@ func Send_email(appl *app.App) error {
 		os.Exit(2)
 	}
 
-	d := gomail.NewDialer(EMAIL_SMTP, 587, appl.MailFrom, appl.EmailPass)
+	d := gomail.NewDialer(EMAIL_SMTP, 587, os.Getenv("MailFrom"), os.Getenv("EmailPass"))
 
 	if err := d.DialAndSend(m); err != nil {
 		panic(err)
