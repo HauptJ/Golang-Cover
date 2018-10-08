@@ -1,7 +1,7 @@
 /*
 DESC: Driver - takes in CLI flags
 Author: Joshua Haupt
-Last Modified: 09-22-2018
+Last Modified: 10-08-2018
 */
 
 package main
@@ -39,12 +39,8 @@ func main() {
 	// EMAIL
 	mailToPtr := flag.String("to", "", "[REQUIRED w/ --email] mail to address")
 	subjectPtr := flag.String("subject", "", "[OPTIONAL] email subject")
-	//mailFromPtr := flag.String("from", "", "[OPTIONAL] mail from address")
-	//emailPassPtr := flag.String("pass", "", "[REQUIRED w/ --email] email account password")
 	// Google Cloud Storage Specific
 	gcUploadPtr := flag.Bool("upload", false, "[OPTIONAL] upload file to bucket")
-	//gcBucketPtr := flag.String("bucket", "", "[REQUIRED w/ --upload] the bucket to upload content to")
-	//gcProjectIDPtr := flag.String("project", "", "[REQUIRED w/ --upload] the ID of the GCP project to use")
 	// follow up
 	whenAppliedPtr := flag.String("applied", "Earlier this week", "when application was submitted")
 	flag.Parse()

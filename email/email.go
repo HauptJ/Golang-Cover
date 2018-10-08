@@ -1,7 +1,7 @@
 /*
 DESC: Writes to log file
 Author: Joshua Haupt
-Last Modified: 0-22-2018
+Last Modified: 10-08-2018
 */
 
 
@@ -18,7 +18,6 @@ import (
 /*
  Constant Declarations
 */
-const EMAIL_SMTP = "smtp.gmail.com"
 const EMAIL_COVER_TEMPL = "email_cover_template.html"
 const EMAIL_TEMPL = "email_template.html"
 const EMAIL_FOLLOW_UP_TEMPL = "email_follow_up_template.html"
@@ -70,7 +69,7 @@ func Send_email(appl *app.App) error {
 		os.Exit(2)
 	}
 
-	d := gomail.NewDialer(EMAIL_SMTP, 587, os.Getenv("MailFrom"), os.Getenv("EmailPass"))
+	d := gomail.NewDialer(os.Getenv("EmailSMTP"), 587, os.Getenv("MailFrom"), os.Getenv("EmailPass"))
 
 	if err := d.DialAndSend(m); err != nil {
 		panic(err)
