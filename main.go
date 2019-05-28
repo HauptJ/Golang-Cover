@@ -7,7 +7,7 @@ Last Modified: 10-08-2018
 package main
 
 import (
-	"./api"
+	//"./api"
 	"./app"
 	"./date"
 	"./email"
@@ -44,6 +44,9 @@ func main() {
 	// follow up
 	whenAppliedPtr := flag.String("applied", "Earlier this week", "when application was submitted")
 	flag.Parse()
+
+	fmt.Println("man")
+	fmt.Println(*headingPtr)
 
 	// Make sure required company name is present if cover is generated
 	if *companyPtr == "" || *optionPtr < 0 {
@@ -91,12 +94,12 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		if appl.Option != 10 {
+		/*if appl.Option != 10 {
 			err = api.SendApp(&appl)
 			if err != nil {
 				panic(err)
 			}
-		}
+		}*/
 		// TODO: follow up API call
 	} else if appl.Test == true {
 		fmt.Println("Application not logged")

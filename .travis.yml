@@ -5,9 +5,9 @@ before_install:
   - sudo apt-get -y install texlive-full
   - sudo add-apt-repository -y ppa:gophers/archive
   - sudo apt-get -y update
-  - sudo apt-get -y install golang-1.10-go
+  - sudo apt-get -y install golang-1.11-go
   - go get gopkg.in/gomail.v2
-  - go get cloud.google.com/go/storage
+  - go get -u cloud.google.com/go/storage
   - go get golang.org/x/net/context
   - git clone --recurse-submodules https://github.com/HauptJ/Golang-API-Docker.git && pushd ./Golang-API-Docker/API && git checkout dev && popd
 

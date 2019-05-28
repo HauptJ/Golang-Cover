@@ -134,12 +134,9 @@ func PharseFlags(appl *App) error {
 		appl.Contact = appl.Contact + CONTACT_ENDING
 	}
 
-	if appl.Heading == "" && appl.Position != "" && appl.Source != "" {
-		appl.Heading = "I am excited about the possibility of joining your organization in the position of " + appl.Position + ", as advertised on " + appl.Source + ". " + appl.HeadingAdd// default heading
-	} else {
-		if appl.Option <= 6 && appl.Option > 0 {
-			panic("heading undefined")
-		}
+	if appl.Heading == "" && (appl.Position != ""  && appl.Source != "") {
+    fmt.Println(appl.Heading)
+		appl.Heading = "I am excited about the possibility of joining your organization in the position of " + appl.Position + ", as advertised on " + appl.Source + ". " + appl.HeadingAdd // default heading
 	}
 
   if appl.Option == 10 && appl.Position != "" && appl.PositionID != "" {
